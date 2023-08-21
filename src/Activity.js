@@ -45,7 +45,7 @@ function Activity() {
               <tbody>
                 {transactionHistory.map((tx, index) => (
                   <tr className="border-0" key={index}>
-                    <td className="py-3 border-0"><img src="https://htmlcolorcodes.com/assets/images/colors/blue-green-color-solid-background-1920x1080.png" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
+                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
                     <td className="py-3 border-0">Example Product Name</td>
                     <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}</td>
                     <td className="py-3 border-0">{tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)} {cryptoType.toUpperCase()}</td>

@@ -39,32 +39,35 @@ function Nav({ cart, count }) {
                 {cart.length > 0 ? (
                   <ul className="list-unstyled m-2 " >
                     {cart.map(item => (
-                      <li key={item.id} className=" p-4 mb-2 rounded d-flex justify-content-between  ">
-                        <div class="position-relative d-flex align-items-center">
+                      <li key={item.id} className=" position-relative p-4 mb-2 rounded d-flex justify-content-between  ">
+                        <div class=" d-flex align-items-center">
     <div>
         <img src={item.image} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} alt={item.name} />
     </div>
     <div>
-        <span className="mx-4 ">{item.name} #0000</span>
-        <span className="mx-4 text-danger d-block">{item.current_price} ETH</span>
+        <span className="mx-4 text-warning">{item.name}</span>
+        <span className="mx-4 text-muted d-block">{item.current_price} ETH</span>
     </div>
+    <div class="position-absolute top-50"  style={{ right: 0}}>
     <a
         onClick={() => removeFromCart(item.id)} 
         className="btn-sm text-end  text-danger m-3"
-        style={{ zIndex: 10 }}>
+        style={{ zIndex: 10}}>
         <span class="material-symbols-outlined">remove</span>
     </a>
+    </div>
 </div>
 
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="p-2">Your cart is empty!</p>
+                  <p className="p-2">Your cart is empty...</p>
                 )}
                 {cart.length > 0 && (
+                
                   <div className="p-2">
-                    <div class=" text-white p-4 my-3"> Checkout Total : {totalPrice} ETH</div>
+                    <p class=" text-muted p-4 my-3 ">You pay : {totalPrice} ETH</p>
                     <a href="/checkout" className="btn btn-success rounded-0 w-100">Checkout</a>
                   </div>
                 )}
