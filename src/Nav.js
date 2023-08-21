@@ -1,14 +1,13 @@
 import React from 'react';
 import './App.css';
+import Logo from './img/Logo.png';
 
-function  Nav({ cart, count }) {
+function Nav({ cart, count }) {
   return (
     <nav className="navbar bg-dark shadow-lg">
-      <div className="p-3">
-        <a href="#" className="navbar-brand text-white rounded-5">
-          <span className="material-symbols-outlined">
-            deployed_code
-          </span> BlockMania
+      <div className='px-4'>
+        <a href="#" className="navbar-brand text-white d-block text-dark rounded-5">
+          <img src={Logo} height={55} width={70}/>
         </a>
       </div>
 
@@ -30,9 +29,9 @@ function  Nav({ cart, count }) {
     <span className="d-block  material-symbols-outlined">
       shopping_bag
     </span>
-   <span class="pt-2"> My Cart <span class="badge bg-warning text-dark">{count}</span></span>
+   <span> My Cart <span class="badge bg-warning text-dark">{count}</span></span>
   </button>
-  <div className="dropdown-menu " aria-labelledby="dropdownMenuButton">
+  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <ul className="list-unstyled">
       {cart.map(item => (
         <li key={item.id} className="p-3 shadow row">

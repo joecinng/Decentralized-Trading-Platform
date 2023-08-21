@@ -1,5 +1,4 @@
 import React from 'react';
-import myImage from './block.webp';
 import './App.css';
 
 function App() {

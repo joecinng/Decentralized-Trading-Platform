@@ -1,6 +1,6 @@
 import React from 'react';
-import myImage from './block.webp';
 import './App.css';
+import Logo from './img/Logo.png';
 
 function Home() {
   return (
@@ -8,10 +8,9 @@ function Home() {
       <div className="rounded mt-5 h-100  bg-dark text-white mx-auto col-sm-7 p-2">
       <div class="row align-items-center align-middle mt-5 w-100">
         <div class="col-sm-6 mt-1">
-        <img src={myImage} alt="logo" />
-        <h3 class="mt-1 text-bold text-center" >Welcome to BlockMania</h3>
-        <p class="fw-bold small text-center">Created by Group 47</p>
- 
+          <img src={Logo} height={55} width={70}/>
+          <h3 class="mt-1 text-bold text-center" >Welcome to BlockMania</h3>
+          <p class="fw-bold small text-center">Created by Group 47</p>
         </div>
         <div class="col-sm-6 mt-1">
         <a href="/login" class="my-3 p-5  btn btn-secondary btn-block d-block">Connect Wallet</a>
