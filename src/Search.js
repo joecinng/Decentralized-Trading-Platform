@@ -39,7 +39,7 @@ function addToCart (asset)  {
     return (
         <>
         <Nav count={cart.length} cart={cart} />
-        <div className="App " style={{ height: '100vh' }}>
+        <div className="App " style={{ height: '' }}>
             <div className="container-fluid bg-dark text-white">
   
                 <div className="row ">
