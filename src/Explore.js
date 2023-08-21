@@ -153,7 +153,14 @@ function Explore() {
                                                 <img class="w-100 image-block card-img "  src={asset.image} />
                                                 <div className="card-body">
                                                    <h5 className="card-title my-2 text-muted">{asset.name} #0000</h5>
-                                                   <p>{asset.desc}</p>
+                                                   <p className="truncate-text" style={{
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '100%'
+}}>
+    {asset.desc}
+</p>
                                                 
                                                    <span className="card-text text-muted">{asset.current_price} ETH</span>
                                                </div>
