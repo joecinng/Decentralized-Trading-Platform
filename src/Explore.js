@@ -3,7 +3,8 @@ import axios from 'axios';
 import Nav from './Nav';
 import { useCart } from './CartContext';
 import './App.css';
-function Search() {
+
+function Explore() {
     const [assets, setAssets] = useState([]);
     const [filteredAssets, setFilteredAssets] = useState([{"id":"1","symbol":"btc","desc":"Artwork by Stefan with a depiction of how sexy Stefan is....","name":"ArtWork Maniac","image":"https://th.bing.com/th/id/OIP.eupcce_RCFpqH2fsWKrLBAHaE7?pid=ImgDet&rs=1","current_price":3},{"id":"2","symbol":"btc","name":"Dania Maniac","desc":"Artwork by Stefan with a depiction of how sexy Stefan is....","image":"https://th.bing.com/th/id/OIP.p86bUO9ND1fxwX57R806PQHaHa?pid=ImgDet&w=900&h=900&rs=1","current_price":3}]);
     const [search, setSearch] = useState();
@@ -97,4 +98,4 @@ function Search() {
     );
 }
 
-export default Search;
+export default Explore;

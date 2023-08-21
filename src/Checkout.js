@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import './App.css';
 
-function Trade() {
+function Checkout() {
   const [cryptoData, setCryptoData] = useState([]);
   const [ethTransactionHistory, setEthTransactionHistory] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -70,4 +70,4 @@ function Trade() {
   );
 }
 
-export default Trade;
+export default Checkout;

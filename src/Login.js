@@ -1,15 +1,12 @@
 import React from 'react';
 import './App.css';
-import { useCart } from './CartContext';
 
-function App() {
+function Login() {
   return (
-    <div className="App  bg-dark ">
+    <div className="App bg-dark">
       <header className="rounded App-header  rounded-5  mx-auto col-sm-6 bg-dark my-3">
-  
-        <div class="col-sm-6  text-white border-2 border-white bg-dark " >
-        <h3 class="mt-1 text-bold" >Connect Wallet</h3>
-        
+        <div class="col-sm-6  text-white border-2 border-white bg-dark">
+          <h3 class="mt-1 text-bold" >Connect Wallet</h3>
           <input 
             type="text" 
             placeholder="Wallet ID" 
@@ -26,16 +23,16 @@ function App() {
         </div>
        
         <a
-          class="text-white my-1 text-decoration-none small "
+          class="text-white my-1 text-decoration-none small"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-         Did you forgot your password?
+          Did you forgot your password?
         </a>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Login;
