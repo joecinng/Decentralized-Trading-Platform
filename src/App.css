@@ -7,6 +7,16 @@ code {
     monospace;
 }
 
+.logo {
+  width: 180px; 
+}
+
+@media (max-width: 1500px) {
+  .logo {
+    width: 100px; 
+  }
+}
+
 .alert-success { 
   background-color: #94ff97; color: black; 
 }

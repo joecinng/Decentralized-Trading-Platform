@@ -30,9 +30,9 @@ function Nav({ cart, count }) {
   
           <div className="d-flex px-5"> 
             <div className="dropdown nav-item p-3 mx-3">
-              <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
+              <button className="btn text-white position-relative" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span className="material-symbols-outlined fs-2">shopping_bag</span>
-                <span className="badge bg-warning text-dark " style={{ marginRight: '-2px' , }}>{count}</span>
+                <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
               </button>
 
               <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0  px-4" style={{  width: '500px'}}>
@@ -41,13 +41,13 @@ function Nav({ cart, count }) {
                     {cart.map(item => (
                       <li key={item.id} className=" p-4 mb-2 rounded d-flex justify-content-between  ">
                         <div class="position-relative d-flex align-items-center">
-    <div>
-        <img src={item.image} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} alt={item.name} />
-    </div>
-    <div>
-        <span className="mx-4 ">{item.name} #0000</span>
-        <span className="mx-4 text-danger d-block">{item.current_price} ETH</span>
-    </div>
+                          <div>
+                            <img src={item.image} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} alt={item.name} />
+                          </div>
+                          <div>
+                            <span className="mx-4 ">{item.name} #0000</span>
+                            <span className="mx-4 text-danger d-block">{item.current_price} ETH</span>
+                          </div>
     <a
         onClick={() => removeFromCart(item.id)} 
         className="btn-sm text-end  text-danger m-3"
