@@ -5,8 +5,8 @@ import Nav from './Nav';
 import './App.css';
 function Search() {
     const [assets, setAssets] = useState([]);
-    const [filteredAssets, setFilteredAssets] = useState([]);
-    const [search, setSearch] = useState('');
+    const [filteredAssets, setFilteredAssets] = useState([{"id":"1","symbol":"btc","desc":"Artwork by Stefan with a depiction of how sexy Stefan is....","name":"ArtWork Maniac","image":"https://th.bing.com/th/id/OIP.eupcce_RCFpqH2fsWKrLBAHaE7?pid=ImgDet&rs=1","current_price":3},{"id":"2","symbol":"btc","name":"Dania Maniac","desc":"Artwork by Stefan with a depiction of how sexy Stefan is....","image":"https://th.bing.com/th/id/OIP.p86bUO9ND1fxwX57R806PQHaHa?pid=ImgDet&w=900&h=900&rs=1","current_price":3}]);
+    const [search, setSearch] = useState();
     const [selectedAsset, setSelectedAsset] = useState(null);
     const blockcypherToken = '317b022b37cf41118924ca48d8627365';
     const [cart, setCart] = useState([]);
