@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
 
 // Create Context
 const CartContext = createContext();
@@ -22,8 +22,14 @@ export const CartProvider = ({ children }) => {
         setCart(prevCart => prevCart.filter(asset => asset.id !== assetId));
     };
 
+    const totalPrice = useMemo(() => {
+        return cart.reduce((accumulator, currentItem) => {
+            return accumulator + currentItem.current_price;
+        }, 0);
+    }, [cart]); // Recompute the value whenever 'cart' changes
+
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalPrice }}>
             {children}
         </CartContext.Provider>
     );

@@ -164,7 +164,7 @@ function Explore() {
                                                 
                                                    <span className="card-text text-muted">{asset.current_price} ETH</span>
                                                </div>
-                                               <button className="btn btn-secondary btn-block" onClick={() => addToCart(asset)}>
+                                               <button className="btn btn-secondary rounded-0 btn-block" onClick={() => addToCart(asset)}>
                 Add to Cart
               </button>
                                            </div>

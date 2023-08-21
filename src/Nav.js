@@ -4,7 +4,7 @@ import Logo from './img/Logo.png';
 import { useCart } from './CartContext';
 
 function Nav({ cart, count }) {
-    const { removeFromCart} = useCart();
+    const { removeFromCart ,totalPrice} = useCart();
     return (
       <nav className="navbar navbar-expand-lg bg-dark shadow-lg w-100">
         <a href="/" className="navbar-brand text-white px-4">
@@ -30,26 +30,32 @@ function Nav({ cart, count }) {
   
           <div className="d-flex px-5"> 
             <div className="dropdown nav-item p-3 mx-3">
-              <button className="btn text-white position-relative" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
                 <span className="material-symbols-outlined fs-2">shopping_bag</span>
-                <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
+                <span className="badge bg-warning text-dark " style={{ marginRight: '-2px' , }}>{count}</span>
               </button>
 
-              <div className="dropdown-menu dropdown-menu-right px-4" aria-labelledby="dropdownMenuButton">
+              <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0  px-4" style={{  width: '500px'}}>
                 {cart.length > 0 ? (
-                  <ul className="list-unstyled m-2">
+                  <ul className="list-unstyled m-2 " >
                     {cart.map(item => (
-                      <li key={item.id} className="shadow p-2 mb-2 rounded d-flex justify-content-between align-items-center">
-                        <div class="position-relative">
-                          <img src={item.image} className="rounded-5 mr-2" style={{ height: '50px', width: '50px', objectFit: 'cover' }} alt={item.name} />
-                          <span className="text-dark fw-bold">{item.name}</span>
-                          <button 
-                            onClick={() => removeFromCart(item.id)} 
-                            className="btn btn-sm position-absolute top-0 end-0 text-danger m-3"
-                            style={{ zIndex: 10, transform: 'translate(50%, -50%)', backgroundColor: 'rgba(255,255,255,0.6)' }}>
-                              <span class="material-symbols-outlined">remove</span>
-                          </button>
-                        </div>
+                      <li key={item.id} className=" p-4 mb-2 rounded d-flex justify-content-between  ">
+                        <div class="position-relative d-flex align-items-center">
+    <div>
+        <img src={item.image} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} alt={item.name} />
+    </div>
+    <div>
+        <span className="mx-4 ">{item.name} #0000</span>
+        <span className="mx-4 text-danger d-block">{item.current_price} ETH</span>
+    </div>
+    <a
+        onClick={() => removeFromCart(item.id)} 
+        className="btn-sm text-end  text-danger m-3"
+        style={{ zIndex: 10 }}>
+        <span class="material-symbols-outlined">remove</span>
+    </a>
+</div>
+
                       </li>
                     ))}
                   </ul>
@@ -58,6 +64,7 @@ function Nav({ cart, count }) {
                 )}
                 {cart.length > 0 && (
                   <div className="p-2">
+                    <div class=" text-white p-4 my-3"> Checkout Total : {totalPrice} ETH</div>
                     <a href="/checkout" className="btn btn-success rounded-0 w-100">Checkout</a>
                   </div>
                 )}
