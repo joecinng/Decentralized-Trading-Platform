@@ -1,120 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import './App.css';
 
 function Dashboard() {
-  const [cryptoData, setCryptoData] = useState([]);
-  const [ethTransactionHistory, setEthTransactionHistory] = useState([]);
+  const [transactionHistory, setTransactionHistory] = useState([]);
+  const [cryptoType, setCryptoType] = useState('eth'); // Default value set to 'ethereum'
+ 
   const [balance, setBalance] = useState(0);
-  const [recipient, setRecipient] = useState('');
-  const [amount, setAmount] = useState(0);
+  const blockcypherToken = '317b022b37cf41118924ca48d8627365';
+  const addresses = {
+    'eth': '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
+  };
 
   useEffect(() => {
-    axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,litecoin,ripple,dogecoin,cardano,polkadot,uniswap,chainlink,binancecoin,stellar')
+    axios.get(`https://api.blockcypher.com/v1/${cryptoType}/main/addrs/${addresses[cryptoType]}/full?token=${blockcypherToken}`)
       .then(response => {
-        setCryptoData(response.data);
+        setTransactionHistory(response.data.txs);
+        setBalance(response.data.balance / (cryptoType === 'eth' ? 1e18 : 1e8)); // Conversion for ETH or BTC-like balances
       })
       .catch(error => {
-        console.error('Error occurred while fetching crypto data:', error);
+        console.error(`Error occurred while fetching ${cryptoType} transaction history:`, error);
       });
-  }, []);
+  }, [cryptoType]);
 
-  useEffect(() => {
-    axios.get('https://api.etherscan.io/api?module=account&action=txlist&address=0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC&startblock=0&endblock=99999999&page=1&offset=1000&sort=desc&apikey=UDHJDUD1QYBWIXF8VHGNDN56FX4TZRQVEV')
-      .then(response => {
-        setEthTransactionHistory(response.data.result);
-      })
-      .catch(error => {
-        console.error('Error occurred while fetching ETH transaction history:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://api.etherscan.io/api?module=account&action=balance&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&tag=latest&apikey=UDHJDUD1QYBWIXF8VHGNDN56FX4TZRQVEV')
-      .then(response => {
-        setBalance(response.data.result / 1e18);
-      })
-      .catch(error => {
-        console.error('Error occurred while fetching balance:', error);
-      });
-  }, []);
-
-  const handleSendTransaction = (event) => {
-    event.preventDefault();
-    // You would handle sending the transaction here.
-    // If using Metamask or similar, use the ethereum object injected into the window.
-    // window.ethereum.request method can be used to interact with the Ethereum blockchain.
-    console.log('Sending transaction:', recipient, amount);
+  const handleCryptoChange = (event) => {
+    setCryptoType(event.target.value);
   };
 
   return (
-    <div className="App w-100" style={{height: '100vh'}}>
-      <div className="container-fluid h-75 ">
-        <div className="row h-100 ">
-          <div className="col-2  h-100 overflow-auto shadow  text-center bg-white bg-light text-dark p-4">
-            {/* This is the sidebar */}
-            <h5>Digital assets</h5>
-            <input type="text" className="form-control my-3 small" placeholder="Search for the asset.." />
-            <div>
-              {cryptoData.map(crypto => (
-                <p className="text-decoration-none mx-0 list-unstyled p-3 shadow" key={crypto.id}>
-                  <img src={crypto.image} alt={crypto.name} className="d-block mx-auto" style={{width: '25px', height: '25px'}}/>
-                  {crypto.name}: {crypto.current_price} USD
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className="col-10 shadow">
+    
+    <div className="App " style={{height: '100vh'}}>
+      <select 
+    className="form-control border-3 py-3 px-3 mx-5 mt-3 rounded-5 bg-dark text-white float-end" 
+    name="cryptocurrency" 
+    value={cryptoType}
+    onChange={handleCryptoChange}
+    style={{width: "auto"}}  // Adjust width to auto to make it button-sized
+>
+    <option value="eth">View Balance in ETH</option>
+
+    </select>
+
+      <div className="container-fluid h-100 bg-dark text-white">
+
+        <div className="row h-100">
+          
+          <div className="col-12 shadow">
             <div className="row h-100">
-              <div className="col-12 text-start bg-light p-4">
-                {/* This is the top area */}
-                <h1 style={{color: 'blue'}}>{balance} ETH </h1>
-                <p className="bg-warning col-sm-4 p-3">Your balance is in Ethereum</p>
-                <h3>Make a transaction</h3>
-                <form onSubmit={handleSendTransaction}>
-                  <label class="d-block my-2">
-                    Recipient:
-                    <input type="text" placeholder="0x343..." class="form-control my-2 col-sm-6" value={recipient} onChange={e => setRecipient(e.target.value)} />
-                  </label>
-                  <label class="d-block my-2">
-                    Amount:
-                    <input type="number" placeholder="0.000000001 ETH" class="form-control my-2 col-sm-6" value={amount} onChange={e => setAmount(e.target.value)} />
-                  </label>
-                  <p class="bg-danger text-white p-4">Note you can not send in any other currency except ETH, if you need a token exchange please visit Binance</p>
-                  <input class="btn btn-success" type="submit" value="Send Transaction" />
-                  
-                </form>
+        
+       
+
+              
+              <div className="col-12 text-start p-4">
+                <div className="col-sm-9 mx-auto m-3 p-5 rounded-5">
+                  <h1>{balance} {cryptoType.toUpperCase()}</h1>
+                  <h5 className="mt-5 py-2">Completed Transactions</h5>
+                  <div className="w-100 col-sm-6">
+                    <table className="table table-dark border-0">
+                      <thead>
+                        <tr className="text-muted">
+                          <th className="border-0">Transaction ID</th>
+                          <th className="border-0">Value</th>
+                          <th className="border-0">Timestamp</th>
+                          <th className="border-0">To Address</th>
+                          <th className="border-0">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {transactionHistory.map((tx, index) => (
+                          <tr className="border-0" key={index}>
+                            <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}</td>
+                            <td className="py-3 border-0">{tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)} {cryptoType.toUpperCase()}</td>
+                            <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
+                            <td className="py-3 border-0">{tx.outputs[0].addresses[0]}</td>
+                            <td className={`py-3 border-0`}>
+                              <span className={`p-3 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
+                                {tx.confirmations > 0 ? 'Confirmed' : 'Pending'}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="row w-100 bg-light shadow h-25 border-4  overflow-auto">
-        <div className="text-start col-12 px-3 py-1 text-dark">
-          {/* This is the main area */}
-          <h3 className="text-start mb-2 ">Transaction History</h3>
-          <div className="table-responsive">
-            <table className="table table-striped table-light">
-              <thead>
-                <tr>
-                  <th>Hash</th>
-                  <th>Value</th>
-                  <th>Timestamp</th>
-                  <th>To</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ethTransactionHistory.map((tx, index) => (
-                  <tr key={index}>
-                    <td>{tx.hash}</td>
-                    <td>{tx.value / 1e18} ETH</td>
-                    <td>{new Date(tx.timeStamp * 1000).toLocaleString()}</td>
-                    <td>{tx.to}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

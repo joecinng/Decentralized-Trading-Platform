@@ -4,32 +4,31 @@ import './App.css';
 function Register() {
   return (
     <div className="App">
-      <header className="col-sm-4 my-2 rounded shadow mx-auto App-header bg-white text-dark p-2">
+      <header className="col-sm-6 my-4 rounded-5 bg-dark text-white shadow mx-auto App-header  text-dark p-2">
         <h3 className="mt-4 text-bold">BlockMania</h3>
-        <p>How about you create a wallet</p>
-        <p className="p-4 alert-success text-dark col-sm-9 small">Note that you will be using the generated Wallet ID once you create a wallet</p>
+        <p>Create a Wallet</p>
         <div className="col-sm-6">
           <input 
             type="email" 
             placeholder="Email" 
-            className="form-control p-3 text-center  my-3 mx-auto"
+            className="bg-dark form-control p-3 text-center  my-3 mx-auto"
             style={{width: '80%'}}
           />
           <input 
             type="password" 
             placeholder="Password" 
-            className="form-control text-center p-3 my-3 mx-auto"
+            className="bg-dark form-control text-center p-3 my-3 mx-auto"
             style={{width: '80%'}}
             onChange={PasswordStrengthChecker}
           />
           <input 
             type="password" 
             placeholder="Confirm Password" 
-            className="form-control text-center p-3 my-3  mx-auto"
+            className="bg-dark form-control text-center p-3 my-3  mx-auto"
             style={{width: '80%'}}
           />
           <div id="validation" className=""></div>
-          <button className="my-2 btn btn-success">Register</button>
+          <button className="my-2 btn btn-secondary col-sm-9 mx-auto">Register</button>
         </div>
         <a
           className="text-dark my-2 text-decoration-none small "

@@ -5,15 +5,20 @@ import './App.css';
 function Home() {
   return (
     <div className="App">
-      <header className="rounded App-header bg-white text-dark mx-auto col-sm-4 p-2">
+      <div className="rounded mt-5 h-100  bg-dark text-white mx-auto col-sm-7 p-2">
+      <div class="row align-items-center align-middle mt-5 w-100">
+        <div class="col-sm-6 mt-1">
         <img src={myImage} alt="logo" />
-        <div class="col-sm-9 mt-1">
-        <h3 class="mt-1 text-bold" >Welcome to BlockMania</h3>
-        <p class="fw-bold small">Created by Group 47</p>
-        <a href="/login" class="m-1 btn btn-success">Login</a><a href="/register" class="btn m-1 btn-warning">Create Wallet</a>
-        <a href="" class="m-1 btn btn-primary">Market</a>
+        <h3 class="mt-1 text-bold text-center" >Welcome to BlockMania</h3>
+        <p class="fw-bold small text-center">Created by Group 47</p>
+ 
         </div>
-      </header>
+        <div class="col-sm-6 mt-1">
+        <a href="/login" class="my-3 p-5  btn btn-secondary btn-block d-block">Connect Wallet</a>
+        <a href="" class="my-3 btn p-5  btn-light  btn-block d-block">Create Wallet</a>
+        </div>
+        </div>
+      </div>
     </div>
   );
 }
