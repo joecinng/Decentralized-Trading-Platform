@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { useCart } from './CartContext';
 
 function App() {
   return (

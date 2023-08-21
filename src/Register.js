@@ -2,9 +2,11 @@ import React from 'react';
 import './App.css';
 
 function Register() {
+ 
   return (
+    
     <div className="App">
-      <header className="col-sm-6 my-4 rounded-5 bg-dark text-white shadow mx-auto App-header  text-dark p-2">
+      <header className="col-sm-6 my-4 rounded-5 text-white shadow mx-auto App-header  text-dark p-2">
         <h3 className="mt-4 text-bold">BlockMania</h3>
         <p>Create a Wallet</p>
         <div className="col-sm-6">
