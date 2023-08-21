@@ -140,13 +140,13 @@ function Explore() {
                                 /></div>
                                 </div>
                                <div class="">
-                                    <h5 className="mb-4 mt-3">Returned Tokens</h5>
+                                    <h5 className="mb-4 mt-3">From 100s assets to choose from...</h5>
                                     <div  className="row w-100 align-items-center ">
                                         {filteredAssets.map(asset => (
                                            <div className="col-sm-3">
                                            <div 
                                                key={asset.id} 
-                                               className="m-1 bg-dark shadow-lg  card text-white" 
+                                               className="m-3 bg-dark shadow-lg  card text-white" 
                                         
                                            >
                                               
