@@ -18,19 +18,24 @@ function Nav({ cart, count }) {
         <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item p-2">
-              <a href="/" className="nav-link text-white">Explore</a>
+              <h5><a href="/" className="nav-link text-white">Explore</a></h5>
             </li>
             <li className="nav-item p-2">
-              <a href="/activity" className="nav-link text-white">Activity</a>
+              <h5><a href="/activity" className="nav-link text-white">Activity</a></h5>
+            </li>
+            <li className="nav-item p-2">
+              <h5><a href="/activity" className="nav-link text-white">Wallet</a></h5>
             </li>
           </ul>
   
-          <div className="d-flex"> 
-            <div className="dropdown nav-item p-3">
-              <button className="btn text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="material-symbols-outlined">shopping_bag</span> My Cart <span className="badge bg-warning text-dark">{count}</span>
+          <div className="d-flex px-5"> 
+            <div className="dropdown nav-item p-3 mx-3">
+              <button className="btn text-white position-relative" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span className="material-symbols-outlined fs-2">shopping_bag</span>
+                <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
               </button>
-              <div className="dropdown-menu dropdown-menu-right "  aria-labelledby="dropdownMenuButton">
+
+              <div className="dropdown-menu dropdown-menu-right px-4" aria-labelledby="dropdownMenuButton">
                 {cart.length > 0 ? (
                   <ul className="list-unstyled m-2">
                     {cart.map(item => (
@@ -61,7 +66,7 @@ function Nav({ cart, count }) {
 
             <div className="nav-item">
               <a href="#" className="navbar-item text-white rounded-5 btn btn-dark py-4 px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                <span className="material-symbols-outlined">account_circle</span> Profile
+                <span className="material-symbols-outlined fs-2">account_circle</span>
               </a>
             </div>
           </div>
