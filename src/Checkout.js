@@ -49,8 +49,10 @@ function Checkout() {
             <p class="mb-0 fw-bold">2.4 ETH</p>
         </div>
     </div>
-    <a href="/wallet" class="w-100 d-block rounded-5 fw-bold p-3 mb-4 bg-success text-white">
-        Connected with wallet
+    <a href="/wallet" class="w-100 text-decoration-none d-block rounded-5 fw-bold p-3 mb-4 bg-success text-white">
+        Connected with wallet <span class="material-symbols-outlined">
+verified
+</span>
     </a>
 
     <a href="" class="btn btn-dark w-100 rounded-5 p-3 fw-bold">Pay 5.1 ETH</a>

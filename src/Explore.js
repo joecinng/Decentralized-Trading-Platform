@@ -134,13 +134,13 @@ function Explore() {
                                     <div class="col-sm-5  text-center"> <input 
                                     type="text" 
                                     className="form-control   mx-auto text-white bg-dark p-3  mb-4" 
-                                    placeholder="Search what to buy..." 
+                                    placeholder=" &#128269; Search what to buy..." 
                                     value={search} 
                                     onChange={handleSearchChange}
                                 /></div>
                                 </div>
                                <div class="">
-                                    <h5 className="mb-4 mt-3">From 100s assets to choose from...</h5>
+                                    <h5 className="mb-4 mt-3">From 100 of assets to choose from...</h5>
                                     <div  className="row w-100 align-items-center ">
                                         {filteredAssets.map(asset => (
                                            <div className="col-sm-3">

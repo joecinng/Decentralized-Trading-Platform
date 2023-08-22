@@ -1,5 +1,5 @@
 * { 
-  font-family: 'Noto Sans Multani', sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 code {
@@ -10,6 +10,27 @@ code {
 .logo {
   width: 180px; 
 }
+
+.nav-order {
+  z-index:100;
+}
+
+.profile:hover .dropdown-profile {
+  display: block;
+}
+.dropdown-profile {
+  display: none;
+  margin-left:-300px;
+  z-index:100;
+  width:400px;
+}
+
+/* Optional: Transition effect for smoother appearance */
+.dropdown-profile {
+  transition: all 0.3s ease;
+}
+
+
 
 @media (max-width: 1500px) {
   .logo {
@@ -42,8 +63,10 @@ code {
   width:200px;
 }
 
+
 .App {
   text-align: center;
+  padding-top:50px;
 }
 
 .App-logo {
@@ -58,6 +81,7 @@ code {
 }
 
 .App-header {
+
   background-color: #282c34;
   min-height: 75vh;
   display: flex;

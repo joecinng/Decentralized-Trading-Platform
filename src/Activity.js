@@ -29,7 +29,7 @@ function Activity() {
     <div className="App">
       <div className="bg-dark text-white px-2">
         <div className="col-12 text-start col-sm-12 mx-auto px-5 rounded-5">
-          <h2 className="py-5">Previous Transactions</h2>
+          <h2 className="py-5 mt-5">Previous Transactions</h2>
             <table className="table w-100 table-dark border-0">
               <thead>
                 <tr className="text-muted">
@@ -37,7 +37,7 @@ function Activity() {
                 <th className="border-0"></th>
                   <th className="border-0">Invoice</th>
                   <th className="border-0">Value</th>
-                  <th className="border-0">Timestamp</th>
+                  <th className="border-0">Date</th>
                   <th className="border-0">To Address</th>
                   <th className="border-0">Status</th>
                 </tr>
@@ -45,7 +45,7 @@ function Activity() {
               <tbody>
                 {transactionHistory.map((tx, index) => (
                   <tr className="border-0" key={index}>
-                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
+                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
                     <td className="py-3 border-0">Example Product Name</td>
                     <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}</td>
                     <td className="py-3 border-0">{tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)} {cryptoType.toUpperCase()}</td>

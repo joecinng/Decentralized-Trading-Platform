@@ -6,6 +6,7 @@ import Register from './Register';
 import Activity from './Activity';
 import Checkout from './Checkout';
 import Explore from './Explore';
+import Wallet from './Wallet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext'; // Import the CartProvider
 
@@ -19,6 +20,7 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Explore />} />
+          <Route path="/wallet" element={<Wallet />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/checkout/" element={<Checkout />} />
           {/* Add as many Route components as needed for different pages */}
