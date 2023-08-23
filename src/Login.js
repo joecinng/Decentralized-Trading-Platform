@@ -4,9 +4,9 @@ import Logo from './img/Logo.png';
 
 function Login() {
   return (
-    <div className="App bg-dark py-5">
-      <header className="rounded App-header rounded-5 mx-auto col-sm-5">
-        <div className="col-sm-8 text-white border-2 border-white">          
+    <div className="App bg-dark py-5 px-2">
+      <header className="rounded App-header  rounded-5 mx-auto col-sm-5">
+        <div className="col-sm-8 text-white border-2 mborder-white">          
           <img src={Logo} alt='logo' className="pb-3 img-fluid logo"/>
           <input 
             type="text" 

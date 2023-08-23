@@ -20,9 +20,9 @@ code {
 }
 .dropdown-profile {
   display: none;
-  margin-left:-300px;
+
   z-index:100;
-  width:400px;
+  min-width:50vw;
 }
 
 /* Optional: Transition effect for smoother appearance */
@@ -60,7 +60,7 @@ code {
 
 .dropdown:hover .dropdown-menu {
   display: block;
-  width:200px;
+  min-width:50vw;
 }
 
 

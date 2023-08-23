@@ -26,11 +26,12 @@ function Activity() {
   return (
     <>
     <Nav count={cart.length} cart={cart} />
-    <div className="App">
+    <div className="App container-fluid">
       <div className="bg-dark text-white px-2">
-        <div className="col-12 text-start col-sm-12 mx-auto px-5 rounded-5">
+        <div className="text-start  col-sm-12 mx-auto px-2 rounded-5">
           <h2 className="py-5 mt-5">Previous Transactions</h2>
-            <table className="table w-100 table-dark border-0">
+          <div class="table-responsive">
+            <table className="table   mx-100 table-dark border-0">
               <thead>
                 <tr className="text-muted">
                 <th className="border-0">Product</th>
@@ -42,7 +43,7 @@ function Activity() {
                   <th className="border-0">Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="w-100">
                 {transactionHistory.map((tx, index) => (
                   <tr className="border-0" key={index}>
                     <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
@@ -60,6 +61,7 @@ function Activity() {
                 ))}
               </tbody>
             </table>
+          </div>
         </div>
       </div>
     </div>

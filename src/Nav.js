@@ -3,34 +3,38 @@ import './App.css';
 import Logo from './img/Logo.png';
 import { useCart } from './CartContext';
 
-function Nav({ cart, count,address }) {
+function Nav({ cart, count, address, balance }) {
     const { removeFromCart, totalPrice } = useCart();
 
     return (
-        <nav className="navbar position-fixed navbar-expand-lg bg-dark shadow-lg w-100 nav-order">
+        <nav className="navbar position-fixed navbar-expand-sm bg-dark shadow-lg w-100 nav-order">
             <a href="/" className="navbar-brand text-white px-4">
                 <img src={Logo} alt='logo' height={62} width={80} />
             </a>
 
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler d-block d-sm-none m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+            <div className="collapse navbar-collapse mx-3  justify-content-between" id="navbarNav">
                 <ul className="navbar-nav">
-                    <li className="nav-item p-2"><h5><a href="/" className="nav-link text-white">Explore</a></h5></li>
-                    <li className="nav-item p-2"><h5><a href="/activity" className="nav-link text-white">Activity</a></h5></li>
-                    <li className="nav-item p-2"><h5><a href="/wallet" className="nav-link text-white">Wallet</a></h5></li>
+                    <li className="nav-item p-2">
+                        <h5><a href="/" className="nav-link text-white">Explore</a></h5>
+                    </li>
+                    <li className="nav-item p-2">
+                        <h5><a href="/activity" className="nav-link text-white">Activity</a></h5>
+                    </li>
+                    <li className="nav-item p-2">
+                        <h5><a href="/wallet" className="nav-link text-white">Wallet</a></h5>
+                    </li>
                 </ul>
-
-                <div className="d-flex px-5">
+                <div className="d-flex px-5"> 
                     <div className="dropdown nav-item p-3 mx-3">
-                        <button className="btn text-white position-relative">
+                        <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
                             <span className="material-symbols-outlined fs-2">shopping_bag</span>
-                            <span className="badge bg-warning text-dark" style={{ marginRight: '-2px' }}>{count}</span>
+                            <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
                         </button>
-
-                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" style={{ width: '500px' }}>
+                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
                             {cart.length > 0 ? (
                                 <ul className="list-unstyled m-2">
                                     {cart.map(item => (
@@ -65,26 +69,20 @@ function Nav({ cart, count,address }) {
                     </div>
 
                     <div className="nav-item">
-                        <div class="profile">
-                        <a className=" navbar-item text-white rounded-5 btn py-4 px-3 position-relative">
-                            <span className="material-symbols-outlined fs-2">account_circle</span>
-                        </a>
-                        <div className="dropdown-profile shadow position-absolute p-4  text-white bg-dark" >
-                        <h4>Hello Stefan Ralph</h4>
-                        <p class="my-4">
-                          <h5>Wallet Address <span class="float-end"><span class="material-symbols-outlined">
-content_copy
-</span></span></h5>
-                          {address}
-                        </p>
-                        <h5>Wallet Balance</h5>
-
-                        <h6 class="fw-bold text-decoration-none text-primary">⟠ 3000ETH</h6>
-                        
-                        <a href="/logout" class="btn w-100 rounded-0 p-4 btn-danger mt-3">Logout</a>
-
-                
-                        </div>
+                        <div className="profile ">
+                            <a className="navbar-item text-white rounded-5 btn py-4 px-3 ">
+                                <span className="material-symbols-outlined fs-2">account_circle</span>
+                            </a>
+                            <div className="dropdown-profile shadow  end-0 position-absolute p-4 text-white bg-dark">
+                                <h4>Hello Stefan Ralph</h4>
+                                <p className="my-4">
+                                    <h5>Wallet Address <span className="float-end"><span className="material-symbols-outlined">content_copy</span></span></h5>
+                                    {address}
+                                </p>
+                                <h5>Wallet Balance</h5>
+                                <h6 className="fw-bold text-decoration-none text-primary">⟠ {balance}ETH</h6>
+                                <a href="/logout" className="btn w-100 rounded-0 p-4 btn-danger mt-3">Logout</a>
+                            </div>
                         </div>
                     </div>
                 </div>

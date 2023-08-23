@@ -5,7 +5,7 @@ import Logo from './img/Logo.png'
 function Register() {
 
   return (
-    <div className="App bg-dark py-5">
+    <div className="App bg-dark py-5 px-2">
       <header className="rounded App-header rounded-5 mx-auto col-sm-5 py-5">
         <div className="col-sm-8 text-white border-2 border-white">          
           <img src={Logo} alt='logo' className="pb-3 img-fluid logo"/>

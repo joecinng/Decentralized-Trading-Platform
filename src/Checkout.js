@@ -18,7 +18,7 @@ function Checkout() {
   };
 
   return (
-    <div className="App w-100 " style={{height: '100vh'}}>
+    <div className="App w-100 ">
         <div class="">
       <div className="container-fluid col-sm-12 mx-auto bg-dark rounded-5  ">
         <div className="row bg-dark h-100 pt-5 col-sm-12 mx-auto">
