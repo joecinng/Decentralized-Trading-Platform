@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Logo from './img/Logo.png';
 import { useCart } from './CartContext';
+
  {/* This is to make sure the cart feature is present so you can view, count and show the users address and balance on the cart component */}
  {/* This is reused for almost every page and so all these parameters must be passed  */}
 function Nav({ cart, count, address, balance }) {
@@ -9,14 +10,14 @@ function Nav({ cart, count, address, balance }) {
 
     return (
         <nav className="navbar position-fixed navbar-expand-sm bg-dark shadow-lg w-100 nav-order">
-            <a href="/" className="navbar-brand text-white px-4">
-                <img src={Logo} alt='logo' height={62} width={80} />
+            <a href="/" className="navbar-brand text-white px-3">
+                <img src={Logo} alt='logo' height={75} width={100} />
             </a>
 
             <button className="navbar-toggler d-block d-sm-none m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
- {/*Navigation links for the other parts of the webpage */}
+            {/*Navigation links for the other parts of the webpage */}
             <div className="collapse navbar-collapse mx-3  justify-content-between" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item p-2">
