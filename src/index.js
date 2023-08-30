@@ -15,15 +15,20 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <CartProvider> {/* Wrap your app with the CartProvider */}
+      <CartProvider> {/* This is for the cart icon to be added to each of the pages */}
         <Routes>
+          {/* Login page route */}
           <Route path="/login" element={<Login />} />
+          {/* Register Page route */}
           <Route path="/register" element={<Register />} />
+          {/* Explore page which is the home page route where users can search for items to buy and returns all the digital assets available for trading */}
           <Route path="/" element={<Explore />} />
+          {/* Connecting your wallet page */}
           <Route path="/wallet" element={<Wallet />} />
+          {/* This shows the users the users previous activity and transactions */}
           <Route path="/activity" element={<Activity />} />
+          {/* This shows the checkout page where users can confirm payment */}
           <Route path="/checkout/" element={<Checkout />} />
-          {/* Add as many Route components as needed for different pages */}
         </Routes>
       </CartProvider>
     </Router>
