@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import Logo from './img/Logo.png';
 import { useCart } from './CartContext';
-
+ {/* This is to make sure the cart feature is present so you can view, count and show the users address and balance on the cart component */}
+ {/* This is reused for almost every page and so all these parameters must be passed  */}
 function Nav({ cart, count, address, balance }) {
     const { removeFromCart, totalPrice } = useCart();
 
@@ -15,7 +16,7 @@ function Nav({ cart, count, address, balance }) {
             <button className="navbar-toggler d-block d-sm-none m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
-
+ {/*Navigation links for the other parts of the webpage */}
             <div className="collapse navbar-collapse mx-3  justify-content-between" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item p-2">
@@ -28,6 +29,7 @@ function Nav({ cart, count, address, balance }) {
                         <h5><a href="/wallet" className="nav-link text-white">Wallet</a></h5>
                     </li>
                 </ul>
+                 {/* Dropdown for the shopping cart where it shows the added cart items */}
                 <div className="d-flex px-5"> 
                     <div className="dropdown nav-item p-3 mx-3">
                         <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
@@ -35,6 +37,7 @@ function Nav({ cart, count, address, balance }) {
                             <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
                         </button>
                         <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
+                             {/* Check if cart is not empty */}
                             {cart.length > 0 ? (
                                 <ul className="list-unstyled m-2">
                                     {cart.map(item => (
@@ -48,6 +51,7 @@ function Nav({ cart, count, address, balance }) {
                                                     <span className="mx-4 text-muted d-block">{item.current_price} ETH</span>
                                                 </div>
                                                 <div className="position-absolute" style={{ right: 0 }}>
+                                                     {/* This functions removes the items from the cart list and this induces a state change where the whole DOM will be rerendered*/}
                                                     <a onClick={() => removeFromCart(item.id)} className="text-end text-danger">
                                                         <span className="material-symbols-outlined">delete</span>
                                                     </a>
@@ -59,6 +63,7 @@ function Nav({ cart, count, address, balance }) {
                             ) : (
                                 <p className="p-2">Your cart is empty...</p>
                             )}
+                             {/* Make sure the cart is still working*/}
                             {cart.length > 0 && (
                                 <div className="p-2">
                                     <p className="text-muted p-4 my-3">You pay : {totalPrice} ETH</p>

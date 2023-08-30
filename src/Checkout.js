@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+
 
 import './App.css';
 
 function Checkout() {
 
-  const [recipient, setRecipient] = useState('');
-  const [amount, setAmount] = useState(0);
-
-
-  const handleSendTransaction = (event) => {
-    event.preventDefault();
-    // You would handle sending the transaction here.
-    // If using Metamask or similar, use the ethereum object injected into the window.
-    // window.ethereum.request method can be used to interact with the Ethereum blockchain.
-    console.log('Sending transaction:', recipient, amount);
-  };
+     {/* This is the checkout page. Totals and shows a summary of the items in the cart and bought*/}
 
   return (
     <div className="App w-100 ">
         <div class="">
       <div className="container-fluid col-sm-12 mx-auto bg-dark rounded-5  ">
-        <div className="row bg-dark h-100 pt-5 col-sm-12 mx-auto">
+        <div className="row bg-dark h-100 col-sm-12 mx-auto">
 
 
         <div class="col-sm-4 bg-light shadow mx-auto p-5 m-5 rounded-5">

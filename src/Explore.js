@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Nav from './Nav';
 import { useCart } from './CartContext';
 import './App.css';
 
 function Explore() {
+   {/*We use States for the variables instead of normal ones since by using states when these values change the DOM is re-rendered. We also 
+    store them in a json format to mimic an SQL query as shown below..*/}
+   {/* temp stores the visible one where as the filteredAssets have the fixed or permanent json objects almost like a SQL query retrived 
+   but the temp stores the filtered ones from the main one when a user searches for a specific asset to buy */}
+
     const [temp, setTemp] = useState([
         {
           "id": "1",
@@ -87,6 +91,7 @@ function Explore() {
           "current_price": 4
         }
       ]);
+    
     const [filteredAssets, setFilteredAssets] = useState([
         {
           "id": "1",
@@ -170,9 +175,12 @@ function Explore() {
         }
       ]
       );
+     {/* We use states because we want to re render the whole DOM when we setSearch(value) so then the states are updated and dynamically shown */}
+
     const [search, setSearch] = useState();
     const { cart, addToCart} = useCart();
 
+     {/*Filters data from the main, if empty returns everything from the permanent SQL query but if something is entered then then use the filter member in JS to filter and returned based on what was entered to the temp variable */}
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -191,18 +199,16 @@ function Explore() {
 
     return (
         <>
+             {/* We are including the nav and passing the cart count and the cart items, so we can add items and update it on the nav bar */}
+
         <Nav count={cart.length} cart={cart} />
         <div className="App " style={{ height: ''}}>
             <div className="container-fluid bg-dark text-white">
-  
                 <div className="row ">
                     <div className="">
                         <div className="row ">
                             <div className=" row text-start mx-auto text-white fw-bold p-4">
-                         
                                 <div className=" mx-auto  m-3 pt-5 rounded-5">
-       
-                                
                                 <div class="w-100 row my-2">
                                     <div class="col-sm-7">
                                     <a href="" class="btn btn-secondary px-4">All</a> 
@@ -210,6 +216,8 @@ function Explore() {
                                     <a href="" class="btn text-white mx-1">Art</a>
                                     <a href="" class="btn text-white  mx-1">Token</a>
                                     </div>
+                                         {/* We use the onchange events so that whenever the input field changes it value, it automatically invokes the handleSearchChange function */}
+
                                     <div class="col-sm-5  text-center"> <input 
                                     type="text" 
                                     className="form-control   mx-auto text-white bg-dark p-3  mb-4" 
@@ -243,6 +251,8 @@ function Explore() {
                                                 
                                                    <span className="card-text text-muted">{asset.current_price} ETH</span>
                                                </div>
+                                                    {/*Adds items to the cart list*/}
+
                                                <button className="btn btn-secondary rounded-0 btn-block" onClick={() => addToCart(asset)}>
                 Add to Cart
               </button>
