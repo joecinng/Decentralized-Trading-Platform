@@ -63,7 +63,7 @@ a {
 
 .dropdown:hover .dropdown-menu {
   display: block;
-  min-width:50vw;
+  min-width:30vw;
 }
 
 

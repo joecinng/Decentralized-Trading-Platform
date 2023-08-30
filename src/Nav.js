@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import './App.css';
 import Logo from './img/Logo.png';
@@ -13,36 +14,36 @@ function Nav({ cart, count, address, balance }) {
             <a href="/" className="navbar-brand text-white px-3">
                 <img src={Logo} alt='logo' height={75} width={100} />
             </a>
-
             <button className="navbar-toggler d-block d-sm-none m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
+
             {/*Navigation links for the other parts of the webpage */}
             <div className="collapse navbar-collapse mx-3  justify-content-between" id="navbarNav">
                 <ul className="navbar-nav">
-                    <li className="nav-item p-2">
-                        <h5><a href="/" className="nav-link text-white">Explore</a></h5>
+                    <li className="nav-item p-3">
+                        <h4><a href="/" className="nav-link text-white">Explore</a></h4>
                     </li>
-                    <li className="nav-item p-2">
-                        <h5><a href="/activity" className="nav-link text-white">Activity</a></h5>
+                    <li className="nav-item p-3">
+                        <h4><a href="/activity" className="nav-link text-white">Activity</a></h4>
                     </li>
-                    <li className="nav-item p-2">
-                        <h5><a href="/wallet" className="nav-link text-white">Wallet</a></h5>
+                    <li className="nav-item p-3">
+                        <h4><a href="/wallet" className="nav-link text-white">Wallet</a></h4>
                     </li>
                 </ul>
-                 {/* Dropdown for the shopping cart where it shows the added cart items */}
+                {/* Dropdown for the shopping cart where it shows the added cart items */}
                 <div className="d-flex px-5"> 
                     <div className="dropdown nav-item p-3 mx-3">
                         <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
-                            <span className="material-symbols-outlined fs-2">shopping_bag</span>
-                            <span className="badge bg-warning text-dark position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
+                            <span className="material-symbols-outlined fs-3">shopping_bag</span>
+                            <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
                         </button>
                         <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
                              {/* Check if cart is not empty */}
                             {cart.length > 0 ? (
                                 <ul className="list-unstyled m-2">
                                     {cart.map(item => (
-                                        <li key={item.id} className="position-relative p-4 mb-2 rounded d-flex justify-content-between">
+                                        <li key={item.id} className="position-relative py-4 mb-2 rounded d-flex justify-content-between">
                                             <div className="d-flex align-items-center">
                                                 <div>
                                                     <img src={item.image} alt={item.name} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} />
@@ -77,7 +78,7 @@ function Nav({ cart, count, address, balance }) {
                     <div className="nav-item">
                         <div className="profile ">
                             <a className="navbar-item text-white rounded-5 btn py-4 px-3 ">
-                                <span className="material-symbols-outlined fs-2">account_circle</span>
+                                <span className="material-symbols-outlined fs-3">account_circle</span>
                             </a>
                             <div className="dropdown-profile shadow  end-0 position-absolute p-4 text-white bg-dark">
                                 <h4>Hello Stefan Ralph</h4>
