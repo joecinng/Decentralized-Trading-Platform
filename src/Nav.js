@@ -39,7 +39,7 @@ function Nav({ cart, count, address, balance }) {
                             <span className="badge bg-danger text-white position-absolute top-0 end-0">{count}</span>
                         </button>
 
-                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-fixed top-0 start-0 p-4" >
+                        <div className="dropdown-menu  bg-dark shadow text-white position-fixed top-0  p-4" style={{ right: '100px' }}>
                             <h5 className='d-inline'>Cart</h5>
                             <span className="badge bg-danger text-white top-0 end-0 d-inline mx-2" style={{ marginRight: '-2px' }}>{count}</span>
                             
@@ -82,7 +82,7 @@ function Nav({ cart, count, address, balance }) {
                     <div className="nav-item">
                         <div className="profile ">
                             <a className="navbar-item text-white rounded-5 btn py-4 px-3 ">
-                                <span className="material-symbols-outlined fs-3">account_circle</span>
+                                <span className="material-symbols-outlined fs-3 ">account_circle</span>
                             </a>
                             <div className="dropdown-profile shadow  end-0 position-absolute p-4 text-white bg-dark">
                                 <h4>Hello Stefan Ralph</h4>
