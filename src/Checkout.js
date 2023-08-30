@@ -18,7 +18,6 @@ function Checkout() {
     <h2 class="text-center fw-bold  mb-4">Checkout</h2>
     <hr></hr>
     <br></br>
-    
     <div class="d-flex align-items-top mb-4">
         <img src="https://source.unsplash.com/random/art" class="rounded-2 me-3" style={{width:'70px', height:'70px', objectFit:'cover'}}></img>
         <div class="flex-grow-1">

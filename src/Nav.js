@@ -32,14 +32,14 @@ function Nav({ cart, count, address, balance }) {
                     </li>
                 </ul>
                 {/* Dropdown for the shopping cart where it shows the added cart items */}
-                <div className="d-flex px-5"> 
+                <div className="d-flex"> 
                     <div className="dropdown nav-item p-3 mx-3">
                         <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
                             <span className="material-symbols-outlined fs-3">shopping_bag</span>
-                            <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '0px' }}>{count}</span>
+                            <span className="badge bg-danger text-white position-absolute top-0 end-0">{count}</span>
                         </button>
 
-                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 p-4" >
+                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-fixed top-0 end-0 p-4" >
                             <h5 className='d-inline'>Cart</h5>
                             <span className="badge bg-danger text-white top-0 end-0 d-inline mx-2" style={{ marginRight: '-2px' }}>{count}</span>
                             
