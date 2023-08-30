@@ -198,17 +198,17 @@ function Explore() {
     <>
     <Nav count={cart.length} cart={cart} />
     <div className="App container-fluid bg-dark text-white">
-      <div className="row text-start mx-auto text-white fw-bold  pt-5 mt-5 rounded-5">
+      <div className="row text-start text-white fw-bold px-lg-4 pt-5 mt-5 rounded-5 d-flex justify-content-center">
         <div class="w-100 row my-2">
-          <div class="col-lg-9 mx-auto ">
-          <div class="table-responsive my-2">
-            <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-secondary"><a href="/" class="text-white"><h5 class="my-1 mx-2">All</h5></a></button>
-              <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Music</h5></a></button>
-              <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Fantom</h5></a></button>
-              <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Art</h5></a></button>
-              <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Token</h5></a></button>
-            </div>
+          <div class="col-lg-7 my-lg-0 my-3">
+            <div class="table-responsive my-2">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary"><a href="/" class="text-white"><h5 class="my-1 mx-2">All</h5></a></button>
+                <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Music</h5></a></button>
+                <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Fantom</h5></a></button>
+                <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Art</h5></a></button>
+                <button type="button" class="btn"><a href="/" class="text-white"><h5 class="my-1 mx-2">Token</h5></a></button>
+              </div>
             </div>
           </div>
           
@@ -228,12 +228,12 @@ function Explore() {
             <div className="col-xl-3">
             <div key={asset.id} className="p-3 my-3 bg-dark shadow-lg card text-white rounded border border-secondary">
               <img class="w-100 image-block card-img" src={asset.image} alt="item" style={{ width: '100%', height: '35vh' }} />
-              <div className="card-body px-0 mx-0">
+              <div className="card-body">
                 <span className="card-title w-50 h-50">{asset.name} #0000</span>
                   <span className="card-text"><h4>{asset.current_price} ETH</h4></span>
                 </div>
                 {/*Adds items to the cart list*/}
-                <button className="btn btn-secondary rounded btn-block" onClick={() => addToCart(asset)}>Add to Cart</button>
+                <button className="btn btn-secondary rounded btn-block fs-5" onClick={() => addToCart(asset)}>Add to Cart</button>
               </div>
             </div>
           ))}
