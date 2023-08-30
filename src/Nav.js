@@ -38,12 +38,13 @@ function Nav({ cart, count, address, balance }) {
                             <span className="material-symbols-outlined fs-3">shopping_bag</span>
                             <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '0px' }}>{count}</span>
                         </button>
+                        <div class="position-absolute"></div>
                         <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
                              {/* Check if cart is not empty */}
                             {cart.length > 0 ? (
                                 <ul className="list-unstyled m-2">
                                     {cart.map(item => (
-                                        <li key={item.id} className="position-relative py-4 mb-2 rounded d-flex justify-content-between">
+                                        <li key={item.id} className="position-relative py-4 mb-2 w-100 rounded d-flex justify-content-between">
                                             <div className="d-flex align-items-center">
                                                 <div>
                                                     <img src={item.image} alt={item.name} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} />
