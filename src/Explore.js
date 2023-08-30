@@ -197,8 +197,8 @@ function Explore() {
   return (
     <>
     <Nav count={cart.length} cart={cart} />
-    <div className="App container-fluid bg-dark text-white align-items-center">
-      <div className="row text-start mx-auto text-white fw-bold px-lg-4 pt-5 mt-5 rounded-5">
+    <div className="App container-fluid bg-dark text-white">
+      <div className="row text-start text-white fw-bold px-lg-4 pt-5 mt-5 rounded-5 d-flex justify-content-center">
         <div class="w-100 row my-2">
           <div class="col-lg-7 my-lg-0 my-3">
             <div class="table-responsive my-2">
@@ -233,7 +233,7 @@ function Explore() {
                   <span className="card-text"><h4>{asset.current_price} ETH</h4></span>
                 </div>
                 {/*Adds items to the cart list*/}
-                <button className="btn btn-secondary rounded btn-block" onClick={() => addToCart(asset)}>Add to Cart</button>
+                <button className="btn btn-secondary rounded btn-block fs-5" onClick={() => addToCart(asset)}>Add to Cart</button>
               </div>
             </div>
           ))}
