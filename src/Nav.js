@@ -39,7 +39,7 @@ function Nav({ cart, count, address, balance }) {
                             <span className="badge bg-danger text-white position-absolute top-0 end-0">{count}</span>
                         </button>
 
-                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-fixed top-0 end-0 p-4" >
+                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-fixed top-0 start-0 p-4" >
                             <h5 className='d-inline'>Cart</h5>
                             <span className="badge bg-danger text-white top-0 end-0 d-inline mx-2" style={{ marginRight: '-2px' }}>{count}</span>
                             
