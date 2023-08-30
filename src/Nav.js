@@ -38,8 +38,11 @@ function Nav({ cart, count, address, balance }) {
                             <span className="material-symbols-outlined fs-3">shopping_bag</span>
                             <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
                         </button>
-                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
-                             {/* Check if cart is not empty */}
+                        <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 p-4" >
+                            <h5 className='d-inline'>Cart</h5>
+                            <span className="badge bg-danger text-white top-0 end-0 d-inline mx-2" style={{ marginRight: '-2px' }}>{count}</span>
+                            
+                            {/* Check if cart is not empty */}
                             {cart.length > 0 ? (
                                 <ul className="list-unstyled m-2">
                                     {cart.map(item => (
@@ -49,8 +52,8 @@ function Nav({ cart, count, address, balance }) {
                                                     <img src={item.image} alt={item.name} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} />
                                                 </div>
                                                 <div>
-                                                    <span className="mx-4 text-warning">{item.name}</span>
-                                                    <span className="mx-4 text-muted d-block">{item.current_price} ETH</span>
+                                                    <span className="mx-4 text-white">{item.name}</span>
+                                                    <span className="mx-4 d-block fs-5">{item.current_price} ETH</span>
                                                 </div>
                                                 <div className="position-absolute" style={{ right: 0 }}>
                                                      {/* This functions removes the items from the cart list and this induces a state change where the whole DOM will be rerendered*/}
@@ -68,8 +71,7 @@ function Nav({ cart, count, address, balance }) {
                              {/* Make sure the cart is still working*/}
                             {cart.length > 0 && (
                                 <div className="p-2">
-                                    <p className="text-muted p-4 my-3">You pay : {totalPrice} ETH</p>
-                                    <a href="/checkout" className="btn btn-success rounded-0 w-100">Checkout</a>
+                                    <a href="/checkout" className="btn btn-success rounded w-100 fs-5">Buy for {totalPrice} ETH</a>
                                 </div>
                             )}
                         </div>
