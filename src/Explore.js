@@ -198,9 +198,9 @@ function Explore() {
     <>
     <Nav count={cart.length} cart={cart} />
     <div className="App container-fluid bg-dark text-white">
-      <div className="row text-start mx-auto text-white fw-bold p-4 pt-5 mt-5 rounded-5">
+      <div className="row text-start mx-auto text-white fw-bold  pt-5 mt-5 rounded-5">
         <div class="w-100 row my-2">
-          <div class="col-lg-7 ">
+          <div class="col-lg-9 mx-auto ">
           <div class="table-responsive my-2">
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-secondary"><a href="/" class="text-white"><h5 class="my-1 mx-2">All</h5></a></button>

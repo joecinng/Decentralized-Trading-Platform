@@ -36,7 +36,7 @@ function Nav({ cart, count, address, balance }) {
                     <div className="dropdown nav-item p-3 mx-3">
                         <button className="btn text-white position-relative"  aria-haspopup="true" aria-expanded="false">
                             <span className="material-symbols-outlined fs-3">shopping_bag</span>
-                            <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '-2px' }}>{count}</span>
+                            <span className="badge bg-danger text-white position-absolute top-0 end-0" style={{ marginRight: '0px' }}>{count}</span>
                         </button>
                         <div className="dropdown-menu dropdown-menu-right bg-dark shadow text-white position-absolute end-0 px-4" >
                              {/* Check if cart is not empty */}
