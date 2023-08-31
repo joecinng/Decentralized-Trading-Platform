@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Nav from './Nav';
 import { useCart } from './CartContext';
-import './App.css';
+import './css/App.css';
 
 function Checkout() {
   const { cart } = useCart();

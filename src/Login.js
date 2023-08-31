@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
 import Logo from './img/Logo.png';
 {/* Login page, this is because, once the user logins, pre saved data such as their wallet address and password and balance are recorded so they don't have to connect to Metamask everything they need to make a payment */}
 function Login() {

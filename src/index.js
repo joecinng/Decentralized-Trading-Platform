@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './App.css';
+import './css/App.css';
 import Login from './Login';
 import Register from './Register';
 import Activity from './Activity';

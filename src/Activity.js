@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css';
+import './css/App.css';
 import { useCart } from './CartContext';
 import Nav from './Nav';
 
@@ -26,43 +26,43 @@ function Activity() {
   return (
     <>
     <Nav count={cart.length} cart={cart} />
-    <div className="App container-fluid">
-      <div className="bg-dark text-white px-2">
-        <div className="text-start  col-sm-12 mx-auto px-2 rounded-5">
-          <h2 className="py-5 mt-5">Previous Transactions</h2>
-          <div class="table-responsive">
-            <table className="table   mx-100 table-dark border-0">
-              <thead>
-                <tr className="text-muted">
-                <th className="border-0">Product</th>
-                <th className="border-0"></th>
-                  <th className="border-0">Invoice</th>
-                  <th className="border-0">Value</th>
-                  <th className="border-0">Date</th>
-                  <th className="border-0">To Address</th>
-                  <th className="border-0">Status</th>
-                </tr>
-              </thead>
-              <tbody class="w-100">
-                {transactionHistory.map((tx, index) => (
-                  <tr className="border-0" key={index}>
-                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
-                    <td className="py-3 border-0">Example Product Name</td>
-                    <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}</td>
-                    <td className="py-3 border-0">{tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)} {cryptoType.toUpperCase()}</td>
-                    <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
-                    <td className="py-3 border-0">{tx.outputs[0].addresses[0]}</td>
-                    <td className={`py-3 border-0`}>
-                      <span className={`p-3 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
-                        {tx.confirmations > 0 ? 'Confirmed' : 'Pending'}
-                      </span>
-                    </td>
+    <div className="App container-fluid bg-dark text-white px-2">
+      <div className="w-100 mt-2 mx-1 row text-start text-white fw-bold px-lg-4 rounded-5 d-flex justify-content-center">
+          <div class="col-lg-12 pt-3">
+            <h4 className="pt-5 pb-4 mt-5">Previous Transactions</h4>
+            <div class="table-responsive borderless">
+              <table className="table mx-100 table-dark">
+                <thead class="text-center">
+                  <tr>
+                    <th className="bg-secondary border-corner-left" colspan="3">Product</th>
+                    <th className="bg-secondary">Invoice</th>
+                    <th className="bg-secondary">Value</th>
+                    <th className="bg-secondary">Date</th>
+                    <th className="bg-secondary">To Address</th>
+                    <th className="bg-secondary border-corner-right">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="w-100 text-center">
+                  <tr><td></td></tr>
+                  {transactionHistory.map((tx, index) => (
+                    <tr className="border-0" key={index}>
+                      <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
+                      <td className="py-3 border-0" colspan="2">Example Product Name</td>
+                      <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 9)}</td>
+                      <td className="py-3 border-0">{(tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)).toFixed(4)} {cryptoType.toUpperCase()}</td>                      
+                      <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
+                      <td className="py-3 border-0">{tx.outputs[0].addresses[0].substring(0, 6) + "..." + tx.outputs[0].addresses[0].substring(tx.outputs[0].addresses[0].length - 9)}</td>
+                      <td className={`py-3 border-0`}>
+                        <span className={`p-2 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
+                          {tx.confirmations > 0 ? 'Success' : 'Pending'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
       </div>
     </div>
     </>

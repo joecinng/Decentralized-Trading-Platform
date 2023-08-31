@@ -1,6 +1,6 @@
 /* eslint-disable no-lone-blocks */
 import React from 'react';
-import './App.css';
+import './css/App.css';
 import Logo from './img/Logo.png';
 import { useCart } from './CartContext';
 
