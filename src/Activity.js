@@ -28,41 +28,41 @@ function Activity() {
     <Nav count={cart.length} cart={cart} />
     <div className="App container-fluid bg-dark text-white px-2">
       <div className="w-100 mt-2 mx-1 row text-start text-white fw-bold px-lg-4 rounded-5 d-flex justify-content-center">
-          <div class="col-lg-12 pt-3">
-            <h4 className="pt-5 pb-4 mt-5">Previous Transactions</h4>
-            <div class="table-responsive borderless">
-              <table className="table mx-100 table-dark">
-                <thead class="text-center">
-                  <tr>
-                    <th className="bg-secondary border-corner-left" colspan="3">Product</th>
-                    <th className="bg-secondary">Invoice</th>
-                    <th className="bg-secondary">Value</th>
-                    <th className="bg-secondary">Date</th>
-                    <th className="bg-secondary">To Address</th>
-                    <th className="bg-secondary border-corner-right">Status</th>
+        <div class="col-lg-12 pt-3">
+          <h4 className="pt-5 pb-4 mt-5">Previous Transactions</h4>
+          <div class="table-responsive borderless">
+            <table className="table mx-100 table-dark">
+              <thead class="text-center">
+                <tr>
+                  <th className="bg-secondary border-corner-left py-3" colspan="3">Product</th>
+                  <th className="bg-secondary py-3">Invoice ID</th>
+                  <th className="bg-secondary py-3">To Address</th>
+                  <th className="bg-secondary py-3">Amount</th>
+                  <th className="bg-secondary py-3">Date</th>
+                  <th className="bg-secondary border-corner-right py-3">Status</th>
+                </tr>
+              </thead>
+              <tbody class="w-100 text-center">
+                <tr><td></td></tr>
+                {transactionHistory.map((tx, index) => (
+                  <tr className="border-0" key={index}>
+                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-3" width="50px" height="50px" alt='pic'/></td>
+                    <td className="py-4 border-0" colspan="2">Example Product Name</td>
+                    <td className="py-4 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 9)}</td>
+                    <td className="py-4 border-0">{tx.outputs[0].addresses[0].substring(0, 6) + "..." + tx.outputs[0].addresses[0].substring(tx.outputs[0].addresses[0].length - 9)}</td>
+                    <td className="py-4 border-0">{(tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)).toFixed(4)} {cryptoType.toUpperCase()}</td>                      
+                    <td className="py-4 border-0">{new Date(tx.received).toLocaleString()}</td>
+                    <td className={`py-4 border-0`}>
+                      <span className={`p-2 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
+                        {tx.confirmations > 0 ? 'Success' : 'Pending'}
+                      </span>
+                    </td>
                   </tr>
-                </thead>
-                <tbody class="w-100 text-center">
-                  <tr><td></td></tr>
-                  {transactionHistory.map((tx, index) => (
-                    <tr className="border-0" key={index}>
-                      <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
-                      <td className="py-3 border-0" colspan="2">Example Product Name</td>
-                      <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 9)}</td>
-                      <td className="py-3 border-0">{(tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)).toFixed(4)} {cryptoType.toUpperCase()}</td>                      
-                      <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
-                      <td className="py-3 border-0">{tx.outputs[0].addresses[0].substring(0, 6) + "..." + tx.outputs[0].addresses[0].substring(tx.outputs[0].addresses[0].length - 9)}</td>
-                      <td className={`py-3 border-0`}>
-                        <span className={`p-2 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
-                          {tx.confirmations > 0 ? 'Success' : 'Pending'}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
+        </div>
       </div>
     </div>
     </>

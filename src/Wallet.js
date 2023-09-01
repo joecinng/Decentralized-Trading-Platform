@@ -53,19 +53,18 @@ function Checkout() {
 
   return (
     <>
-      <Nav count={cart.length} cart={cart} address={accounts[0]} balance={balance} />
-      <div className="App w-100 " style={{ height: '100vh' }}>
-        <div className="">
-          <div className="container-fluid col-sm-12 mx-auto bg-dark rounded-5">
-            <div className="row bg-dark h-100 pt-5 col-sm-12 mx-auto">
-              <div className="col-sm-4 bg-light shadow mx-auto p-5 m-5 rounded-5">
-                <h2 className="text-center mt-4 mb-4">Connect Wallet</h2>
-                <p className="fw-bold">Connect your wallet by installing metamask on your browser and they'll do the rest for you</p>
-                <div className="d-flex align-items-top mb-4">
-                  <a href="#" className={`btn ${isConnected ? 'btn-success' : 'btn-primary'} rounded-3 w-100 p-4`} onClick={connectWallet} id="Connect">
-                    {isConnected ? 'Connected' : 'Connect via MetaMask'}
-                  </a>
-                </div>
+      <Nav count={cart.length} cart={cart} address={accounts[0]} balance={balance}/>
+      <div className="App w-100">
+        <div className="container-fluid col-sm-12 mx-auto bg-dark mt-5 pt-5">
+          <div className="row bg-dark h-100">
+            <div class="col-sm-4 App-header shadow mx-auto p-5 m-5 rounded-5">
+              <h4 className="text-center my-4">Connect Wallet</h4>
+              <p className="pb-3 fw-bold">Connect your wallet by installing metamask on your browser and they'll do the rest for you</p>
+              <div className="mb-3">
+                <a href="/wallet" className={`w-100 text-decoration-none d-flex align-items-center justify-content-center rounded-5 fw-bold py-3 px-4 bg-light text-dark ${isConnected ? 'disabled' : ''}`} onClick={connectWallet} id="Connect">
+                  <span>{isConnected ? 'Connected' : 'Connect via MetaMask'}</span>
+                  <span class="material-symbols-outlined mx-2 fs-5">wallet</span>
+                </a>
               </div>
             </div>
           </div>

@@ -5,47 +5,20 @@ import Logo from './img/Logo.png'
 function Register() {
 
   return (
-    <div className="App bg-dark py-5 px-2">
+    <div className="App bg-dark px-2 py-4">
       <header className="rounded App-header rounded-5 mx-auto col-sm-5 py-5">
         <div className="col-sm-8 text-white border-2 border-white">          
           <img src={Logo} alt='logo' className="pb-3 img-fluid logo"/>
-          <input 
-            type="text" 
-            placeholder="Username" 
-            className="form-control p-3 bg-dark text-center my-3 mx-auto text-white"
-            style={{width: '80%', height: '10%'}}
-          />
-          <input 
-            type="text" 
-            placeholder="Email Address" 
-            className="form-control p-3 bg-dark text-center my-3 mx-auto text-white"
-            style={{width: '80%', height: '10%'}}
-          />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            className="form-control text-center bg-dark p-3 my-3 mx-auto text-white"
-            style={{width: '80%', height: '10%'}}
-          />
-          <input 
-            type="password" 
-            placeholder="Confirm Password" 
-            className="form-control text-center bg-dark p-3 my-3 mx-auto text-white"
-            style={{width: '80%', height: '10%'}}
-          />
-          <div id="validation" className=""></div>
-          <button class="my-4 btn btn-secondary btn-block col-sm-9 mx-auto d-block p-3 rounded-pill"><b>SIGN UP</b></button>
-        </div>
-       
-        <span className='text-secondary'>Have an account already?<t>  </t>
-          <a
-            className="text-white my-1 text-decoration-underline"
-            href="/login"
-            rel="noopener noreferrer"
-          >
-            Log In
-          </a>
-        </span>
+          <input type="text" placeholder="Username" className="form-control p-3 bg-dark text-center my-3 mx-auto text-white input-form"/>
+          <input type="text" placeholder="Email Address" className="form-control p-3 bg-dark text-center my-3 mx-auto text-white input-form"/>
+          <input type="password" placeholder="Password" className="form-control text-center bg-dark p-3 my-3 mx-auto text-white input-form"/>
+          <input type="password" placeholder="Confirm Password" className="form-control text-center bg-dark p-3 my-3 mx-auto text-white input-form"/>
+          <div id="validation"></div>
+            <button class="my-4 btn btn-light text-dark fs-5 fw-bold btn-block col-lg-10 col-8 mx-auto d-block p-2 rounded-5" disabled><b>SIGN UP</b></button>
+          </div>
+          <span className='text-secondary'>Have an account already?<t>  </t>
+            <a className="text-white my-1 text-decoration-underline" href="/login" rel="noopener noreferrer">Log In</a>
+          </span>
       </header>
     </div>
   );
