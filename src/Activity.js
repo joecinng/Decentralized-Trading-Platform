@@ -53,7 +53,7 @@ function Activity() {
                     <td className="py-4 border-0">{(tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)).toFixed(4)} {cryptoType.toUpperCase()}</td>                      
                     <td className="py-4 border-0">{new Date(tx.received).toLocaleString()}</td>
                     <td className={`py-4 border-0`}>
-                      <span className={`p-2 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
+                      <span className={`text-decoration-none d-flex align-items-center justify-content-center rounded fw-bold p-1 small ${tx.confirmations > 0 ? 'success-status': ''}`}>
                         {tx.confirmations > 0 ? 'Success' : 'Pending'}
                       </span>
                     </td>

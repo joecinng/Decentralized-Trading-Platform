@@ -62,7 +62,7 @@ function Nav({ cart, count, address, balance }) {
                                                 <div className="position-absolute cart-delete-icon">
                                                      {/* This functions removes the items from the cart list and this induces a state change where the whole DOM will be rerendered*/}
                                                     <span onClick={() => removeFromCart(item.id)} className="text-end text-secondary">
-                                                        <span className="material-symbols-outlined">delete</span>
+                                                        <span className="material-symbols-outlined fs-5">delete</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -75,7 +75,7 @@ function Nav({ cart, count, address, balance }) {
                              {/* Make sure the cart is still working*/}
                             {cart.length > 0 && (
                                 <div className="p-2">
-                                    <a href="/checkout" className="btn btn-success rounded-5 w-100 mt-2 p-2">Buy for {totalPrice} ETH</a>
+                                    <a href="/checkout" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-2 fw-bold">Buy for {totalPrice} ETH</a>
                                 </div>
                             )}
                         </div>

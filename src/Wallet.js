@@ -57,7 +57,7 @@ function Checkout() {
       <div className="App w-100 d-flex justify-content-center align-items-center vh-100">
       <div className="container-fluid col-sm-12 mx-auto">
         <div className="row h-100 d-flex align-items-center">
-          <div className="col-sm-4 bg-light shadow mx-auto p-5 rounded-5">
+          <div className="col-sm-4 bg-light shadow mx-auto px-5 py-3 rounded-5">
               <h4 className="text-center my-4">Connect Wallet</h4>
               <p className="pb-3 fw-bold">Connect your wallet by installing metamask on your browser and they'll do the rest for you</p>
               <div className="mb-3">
