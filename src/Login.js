@@ -11,7 +11,7 @@ function Login() {
           <input type="text" placeholder="Email Address" className="form-control p-3 bg-light text-center my-2 text-dark input-form"/>
           <input type="password" placeholder="Password" className="form-control p-3 bg-light text-center my-2 text-dark input-form"/>
           <div id="validation"></div>
-          <button className="mt-4 btn btn-dark fs-5 fw-bold btn-block col-lg-10 col-8 mx-auto d-block p-2 rounded-5 w-100" disabled><b>LOG IN</b></button>
+          <button className="mt-4 btn btn-dark fs-5 fw-bold btn-block col-lg-10 col-8 mx-auto d-block p-3 rounded-5 w-100"><b>Log In</b></button>
         </div>
         <span className='text-dark d-block text-center mt-3'>
           Don't have an account?{' '}

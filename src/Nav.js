@@ -75,7 +75,7 @@ function Nav({ cart, count, address, balance }) {
                              {/* Make sure the cart is still working*/}
                             {cart.length > 0 && (
                                 <div className="p-2">
-                                    <a href="/checkout" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-2 fw-bold">Buy for {totalPrice} ETH</a>
+                                    <a href="/checkout" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-3 fw-bold">Buy for {totalPrice} ETH</a>
                                 </div>
                             )}
                         </div>
@@ -101,7 +101,7 @@ function Nav({ cart, count, address, balance }) {
                                     <h6 className="fw-bold text-decoration-none text-white mb-0 ms-2">{balance} ETH</h6>
                                 </div>
                                 <div className="p-2">
-                                    <a href="/login" className="btn btn-danger rounded-5 w-100 p-2 mt-4">Logout</a>
+                                    <a href="/login" className="btn btn-danger rounded-5 w-100 p-3 mt-4">Logout</a>
                                 </div>
                             </div>
                         </div>
