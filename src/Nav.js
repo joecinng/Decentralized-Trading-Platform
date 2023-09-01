@@ -101,7 +101,7 @@ function Nav({ cart, count, address, balance }) {
                                     <h6 className="fw-bold text-decoration-none text-white mb-0 ms-2">{balance} ETH</h6>
                                 </div>
                                 <div className="p-2">
-                                    <a href="/logout" className="btn btn-danger rounded-5 w-100 p-2 mt-4">Logout</a>
+                                    <a href="/login" className="btn btn-danger rounded-5 w-100 p-2 mt-4">Logout</a>
                                 </div>
                             </div>
                         </div>

@@ -54,14 +54,14 @@ function Checkout() {
   return (
     <>
       <Nav count={cart.length} cart={cart} address={accounts[0]} balance={balance}/>
-      <div className="App w-100">
-        <div className="container-fluid col-sm-12 mx-auto bg-dark mt-5 pt-5">
-          <div className="row bg-dark h-100">
-            <div class="col-sm-4 App-header shadow mx-auto p-5 m-5 rounded-5">
+      <div className="App w-100 d-flex justify-content-center align-items-center vh-100">
+      <div className="container-fluid col-sm-12 mx-auto">
+        <div className="row h-100 d-flex align-items-center">
+          <div className="col-sm-4 bg-light shadow mx-auto p-5 rounded-5">
               <h4 className="text-center my-4">Connect Wallet</h4>
               <p className="pb-3 fw-bold">Connect your wallet by installing metamask on your browser and they'll do the rest for you</p>
               <div className="mb-3">
-                <a href="/wallet" className={`w-100 text-decoration-none d-flex align-items-center justify-content-center rounded-5 fw-bold py-3 px-4 bg-light text-dark ${isConnected ? 'disabled' : ''}`} onClick={connectWallet} id="Connect">
+                <a href="/wallet" className={`w-100 text-decoration-none d-flex align-items-center justify-content-center rounded-5 fw-bold py-3 bg-dark text-light ${isConnected ? 'disabled' : ''}`} onClick={connectWallet} id="Connect">
                   <span>{isConnected ? 'Connected' : 'Connect via MetaMask'}</span>
                   <span class="material-symbols-outlined mx-2 fs-5">wallet</span>
                 </a>
