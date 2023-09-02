@@ -1,9 +1,10 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import './css/App.css';
 import Logo from './img/Logo-black.png'
 
+{/* Login page, this is because, once the user signs up*/}
 function Register() {
-
   return (
     <div className="App bg-dark d-flex justify-content-center align-items-center vh-100">
       <header className="App-header rounded-5 mx-auto col-sm-5 shadow py-5 bg-light">

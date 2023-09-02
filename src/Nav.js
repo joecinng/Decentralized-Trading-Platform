@@ -34,8 +34,8 @@ function Nav({ cart, count, address, balance }) {
                     </li>
                 </ul>
                 {/* Dropdown for the shopping cart where it shows the added cart items */}
-                <div className="d-flex"> 
-                    <div className="dropdown nav-item p-3 mx-3">
+                <div className="d-flex justify-content-center"> 
+                    <div className="dropdown nav-item p-3 mx-lg-3">
                         <button className="btn text-white position-relative text-center"  aria-haspopup="true" aria-expanded="false">
                             <span className="material-symbols-outlined fs-5">shopping_bag</span>
                             <span className="badge bg-danger p-1 text-white position-absolute top-0 end-0">{count}</span>
