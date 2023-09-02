@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import './css/App.css';
 import Success from './img/success.png'

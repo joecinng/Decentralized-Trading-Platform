@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import './css/App.css';
 import EthIcon from './img/ETH-icon.png'
