@@ -25,6 +25,7 @@ function Register() {
   );
 }
 
+/*
 function PasswordStrengthChecker(event) {
     const password = event.target.value;
     let validation = document.getElementById('validation');
@@ -46,5 +47,6 @@ function PasswordStrengthChecker(event) {
         validation.textContent=""
     }
 }
+*/
 
 export default Register;
