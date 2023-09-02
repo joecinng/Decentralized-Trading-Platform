@@ -1,3 +1,8 @@
+/* Team 47: BlockMania 
+    Stefan Ralph Kumarasinghe (103804645)
+    Joe Cin NG (102765534)
+    Miran Abeyewardene (103824193) */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/App.css';

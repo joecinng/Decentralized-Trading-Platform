@@ -1,3 +1,8 @@
+/* Team 47: BlockMania 
+    Stefan Ralph Kumarasinghe (103804645)
+    Joe Cin NG (102765534)
+    Miran Abeyewardene (103824193) */
+
 import React, { createContext, useContext, useState, useMemo } from 'react';
 
 // This is for all the functions of the cart
