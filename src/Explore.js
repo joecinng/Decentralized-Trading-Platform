@@ -10,171 +10,26 @@ function Explore() {
   store them in a json format to mimic an SQL query as shown below..*/}
   {/* temp stores the visible one where as the filteredAssets have the fixed or permanent json objects almost like a SQL query retrived 
   but the temp stores the filtered ones from the main one when a user searches for a specific asset to buy */}
-  const [temp, setTemp] = useState([
-    {
-      "id": "1",
-      "symbol": "btc",
-      "desc": "Artwork by John Doe.",
-      "name": "ArtWork Maniac",
-      "image": "https://source.unsplash.com/random/art?1",
-      "current_price": 3
-    },
-    {
-      "id": "2",
-      "symbol": "btc",
-      "desc": "Artwork by John Doe.",
-      "name": "Dania Maniac",
-      "image": "https://source.unsplash.com/random/art?2",
-      "current_price": 3
-    },
-    {
-      "id": "3",
-      "symbol": "btc",
-      "desc": "Abstract art showcasing the beauty of nature.",
-      "name": "Nature's Abstract",
-      "image": "https://source.unsplash.com/random/art?3",
-      "current_price": 4
-    },
-    {
-      "id": "4",
-      "symbol": "btc",
-      "desc": "Artwork focusing on geometric patterns.",
-      "name": "Geometric Magic",
-      "image": "https://source.unsplash.com/random/art?4",
-      "current_price": 5
-    },
-    {
-      "id": "5",
-      "symbol": "btc",
-      "desc": "Art inspired by the wonders of the universe.",
-      "name": "Galactic Dreams",
-      "image": "https://source.unsplash.com/random/art?5",
-      "current_price": 6
-    },
-    {
-      "id": "6",
-      "symbol": "btc",
-      "desc": "Art that mirrors the complexity of human emotions.",
-      "name": "Emotion Spectrum",
-      "image": "https://source.unsplash.com/random/art?6",
-      "current_price": 3.5
-    },
-    {
-      "id": "7",
-      "symbol": "btc",
-      "desc": "An artistic representation of time's relentless march.",
-      "name": "Eternal Clock",
-      "image": "https://source.unsplash.com/random/art?7",
-      "current_price": 7
-    },
-    {
-      "id": "8",
-      "symbol": "btc",
-      "desc": "A colorful depiction of summer's joy.",
-      "name": "Summer Palette",
-      "image": "https://source.unsplash.com/random/art?8",
-      "current_price": 4.5
-    },
-    {
-      "id": "9",
-      "symbol": "btc",
-      "desc": "The dance of colors on a canvas.",
-      "name": "Color Waltz",
-      "image": "https://source.unsplash.com/random/art?9",
-      "current_price": 5.5
-    },
-    {
-      "id": "10",
-      "symbol": "btc",
-      "desc": "The serenity of winter captured in art.",
-      "name": "Winter Calm",
-      "image": "https://source.unsplash.com/random/art?10",
-      "current_price": 4
+  const [temp, setTemp] = useState([]);
+const [filteredAssets, setFilteredAssets] = useState([]);
+
+useEffect(() => {
+  // This function fetches data from the API
+  async function fetchData() {
+    try {
+      let response = await fetch('http://127.0.0.1:8000/items/');
+      let data = await response.json();
+
+      setTemp(data);
+      setFilteredAssets(data);
+    } catch (error) {
+      console.error("Error fetching the data: ", error);
     }
-  ]);
-    
-  const [filteredAssets, setFilteredAssets] = useState([
-    {
-      "id": "1",
-      "symbol": "btc",
-      "desc": "Artwork by John Doe.",
-      "name": "ArtWork Maniac",
-      "image": "https://source.unsplash.com/random/art?1",
-      "current_price": 3
-    },
-    {
-      "id": "2",
-      "symbol": "btc",
-      "desc": "Artwork by John Doe.",
-      "name": "Dania Maniac",
-      "image": "https://source.unsplash.com/random/art?2",
-      "current_price": 3
-    },
-    {
-      "id": "3",
-      "symbol": "btc",
-      "desc": "Abstract art showcasing the beauty of nature.",
-      "name": "Nature's Abstract",
-      "image": "https://source.unsplash.com/random/art?3",
-      "current_price": 4
-    },
-    {
-      "id": "4",
-      "symbol": "btc",
-      "desc": "Artwork focusing on geometric patterns.",
-      "name": "Geometric Magic",
-      "image": "https://source.unsplash.com/random/art?4",
-      "current_price": 5
-    },
-    {
-      "id": "5",
-      "symbol": "btc",
-      "desc": "Art inspired by the wonders of the universe.",
-      "name": "Galactic Dreams",
-      "image": "https://source.unsplash.com/random/art?5",
-      "current_price": 6
-    },
-    {
-      "id": "6",
-      "symbol": "btc",
-      "desc": "Art that mirrors the complexity of human emotions.",
-      "name": "Emotion Spectrum",
-      "image": "https://source.unsplash.com/random/art?6",
-      "current_price": 3.5
-    },
-    {
-      "id": "7",
-      "symbol": "btc",
-      "desc": "An artistic representation of time's relentless march.",
-      "name": "Eternal Clock",
-      "image": "https://source.unsplash.com/random/art?7",
-      "current_price": 7
-    },
-    {
-      "id": "8",
-      "symbol": "btc",
-      "desc": "A colorful depiction of summer's joy.",
-      "name": "Summer Palette",
-      "image": "https://source.unsplash.com/random/art?8",
-      "current_price": 4.5
-    },
-    {
-      "id": "9",
-      "symbol": "btc",
-      "desc": "The dance of colors on a canvas.",
-      "name": "Color Waltz",
-      "image": "https://source.unsplash.com/random/art?9",
-      "current_price": 5.5
-    },
-    {
-      "id": "10",
-      "symbol": "btc",
-      "desc": "The serenity of winter captured in art.",
-      "name": "Winter Calm",
-      "image": "https://source.unsplash.com/random/art?10",
-      "current_price": 4
-    }
-  ]);
+  }
+
+  // Invoke the fetchData function
+  fetchData();
+}, []); // The empty dependency array ensures this useEffect runs only once when the component mounts
 
   {/* We use states because we want to re render the whole DOM when we setSearch(value) so then the states are updated and dynamically shown */}
   const [search, setSearch] = useState();
@@ -227,7 +82,7 @@ function Explore() {
           {temp.map(asset => (
             <div className="col-xl-3">
             <div key={asset.id} className="p-3 my-3 bg-dark shadow-lg card text-white rounded border border-secondary">
-              <img class="w-100 image-block card-img" src={asset.image} alt="item" style={{ width: '100%', height: '35vh' }} />
+              <img class="w-100 image-block card-img" src={asset.image_url} alt="item" style={{ width: '100%', height: '35vh' }} />
               <div className="card-body">
                 <span className="card-title w-50 h-50">{asset.name} #0000</span>
                   <span className="card-text"><h4>{asset.current_price} ETH</h4></span>

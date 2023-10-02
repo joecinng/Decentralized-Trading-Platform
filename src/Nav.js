@@ -51,7 +51,7 @@ function Nav({ cart, count, address, balance }) {
                                         <li key={item.id} className="position-relative py-4 mb-2 w-100 rounded d-flex justify-content-between">
                                             <div className="d-flex align-items-center">
                                                 <div>
-                                                    <img src={item.image} alt={item.name} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} />
+                                                    <img src={item.image_url} alt={item.name} className="rounded-5 mr-5" style={{ height: '50px', width: '50px', objectFit: 'cover' }} />
                                                 </div>
                                                 <div>
                                                     <span className="mx-4 text-white">{item.name}</span>

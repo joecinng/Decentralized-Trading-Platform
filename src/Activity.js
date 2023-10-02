@@ -8,21 +8,20 @@ function Activity() {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [cryptoType] = useState('eth'); // Default value set to 'ethereum'
   const { cart } = useCart();
-  const blockcypherToken = '317b022b37cf41118924ca48d8627365';
 
   useEffect(() => {
-    const addresses = {
-      'eth': '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
-    };
-    axios.get(`https://api.blockcypher.com/v1/${cryptoType}/main/addrs/${addresses[cryptoType]}/full?token=${blockcypherToken}`)
-      .then(response => {
-        setTransactionHistory(response.data.txs);
-      })
+    axios.get(`http://127.0.0.1:8000/transactions/`)
+    .then(response => {
+  if (Array.isArray(response.data)) {
+    setTransactionHistory(response.data);
+  } else {
+    console.warn("Unexpected data structure from API");
+  }
+})
       .catch(error => {
         console.error(`Error occurred while fetching ${cryptoType} transaction history:`, error);
       });
   }, [cryptoType]);
-
   return (
     <>
     <Nav count={cart.length} cart={cart} />
@@ -43,23 +42,37 @@ function Activity() {
                   <th className="border-0">Status</th>
                 </tr>
               </thead>
-              <tbody class="w-100">
-                {transactionHistory.map((tx, index) => (
-                  <tr className="border-0" key={index}>
-                    <td className="py-3 border-0"><img src="https://source.unsplash.com/random/art?random" class="rounded-5" width="50px" height="50px" alt='pic'/></td>
-                    <td className="py-3 border-0">Example Product Name</td>
-                    <td className="py-3 border-0">{tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}</td>
-                    <td className="py-3 border-0">{tx.total / (cryptoType === 'eth' ? 1e18 : 1e8)} {cryptoType.toUpperCase()}</td>
-                    <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
-                    <td className="py-3 border-0">{tx.outputs[0].addresses[0]}</td>
-                    <td className={`py-3 border-0`}>
-                      <span className={`p-3 fw-bold ${tx.confirmations > 0 ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'}`}>
-                        {tx.confirmations > 0 ? 'Confirmed' : 'Pending'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              <tbody className="w-100">
+    {transactionHistory.map((tx) => (
+        <tr className="border-0" key={tx.transaction_id}>
+            <td className="py-3 border-0">
+                <img 
+                    src={tx.image_url} 
+                    className="rounded-5" 
+                    width="50px" 
+                    height="50px" 
+                    alt={tx.product_name} 
+                />
+            </td>
+            <td className="py-3 border-0">{tx.product_name}</td>
+            <td className="py-3 border-0">
+                {tx.hash.substring(0, 6) + "..." + tx.hash.substring(tx.hash.length - 4)}
+            </td>
+            <td className="py-3 border-0">
+                {tx.total}
+            </td>
+            <td className="py-3 border-0">{new Date(tx.received).toLocaleString()}</td>
+            <td className="py-3 border-0">{tx.output_address}</td>
+            <td className={`py-3 border-0`}>
+                <span className={`p-3 fw-bold ${
+                    tx.status === 'Confirmed' ? 'rounded-3 btn-success bg-success' : 'rounded-3 btn-warning bg-warning'
+                }`}>
+                    {tx.status}
+                </span>
+            </td>
+        </tr>
+    ))}
+</tbody>
             </table>
           </div>
         </div>
