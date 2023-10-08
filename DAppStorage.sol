@@ -11,14 +11,12 @@ contract DAppStorage {
     }
 
     Transaction[] public transactions;
-    uint256 public transactionCount;
+    uint256 public transactionCount = 0;
 
-    event TransactionAdded(uint256 indexed transactionId, address indexed userAddress, uint256 indexed itemId, uint256 totalPrice);
 
     function addTransaction(address _userAddress, uint256 _itemId, uint256 _totalPrice) public {
         uint256 newTransactionId = transactionCount++;
         transactions.push(Transaction(newTransactionId, _userAddress, _itemId, _totalPrice));
-        emit TransactionAdded(newTransactionId, _userAddress, _itemId, _totalPrice);
     }
 
     function getTransactionsCount() public view returns (uint256) {

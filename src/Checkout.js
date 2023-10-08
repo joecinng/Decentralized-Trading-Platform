@@ -9,10 +9,12 @@
     import Web3 from 'web3';
 
     function Checkout() {
-        
+        const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256","name":"_itemId","type":"uint256"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"transactionId","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"itemId","type":"uint256"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}];
+        const contractAddress = "0xD17754D1212c63f260670dBB62dB90007fc267c0";
         const { cart, totalPrice } = useCart();
         const [accounts, setAccounts] = useState([]);
         const [isConnected, setIsConnected] = useState(false);
+        const web3 = new Web3(window.ethereum);
 
         useEffect(() => {
             // Function to connect to MetaMask
@@ -36,39 +38,66 @@
         }, []);
 
         const handleCheckout = async () => {
+            const receiver = '0x6d47F9C92abA87334AE51fd358B7b035B6543d8c';
+          
             if (isConnected) {
-                const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
-                try {
-                    const response = await fetch(endpoint, {
-                        method: 'post',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(cart)
+              const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
+              try {
+                const response = await fetch(endpoint, {
+                  method: 'post',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(cart),
+                });
+          
+                if (response.ok) {
+                  const data = await response.json();
+                  if (data.status === "success") {
+                    // Correctly formatted numeric value in ether
+                    const etherValue = web3.utils.toWei(totalPrice.toString(), 'ether');
+          
+                    // Define the gas price you want to use (in wei)
+                    const gasPriceWei = web3.utils.toWei('50', 'gwei'); // Example: 50 Gwei
+          
+                    // Send ETH to receiver with the specified gas price
+                    const ethTransaction = await web3.eth.sendTransaction({
+                        from: accounts[0],
+                        to: receiver,
+                        value: etherValue,
+                        gasPrice: gasPriceWei, // Set your desired gas price here
                     });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.status === "success") {
-                            // Handle success
-                            console.log('Checkout successful:', data.message);
-                            localStorage.removeItem('cart')
-                            //window.location.href="/confirmation"
-                        } else {
-                            // Handle server-side checkout failure
-                            console.error('Checkout failed:', data.message);
-                            //window.location.href="/activity"
-                        }
-                    } else {
-                        const jsonResponse = await response.json();
-                        console.error('Checkout failed:', jsonResponse);
-                    
-                    }
-                } catch (error) {
-                    console.error('An error occurred:', error);
+          
+                    console.log('Transaction Hash:', ethTransaction.transactionHash);
+          
+                    // Interaction with your contract
+                    const contract = new web3.eth.Contract(abi, contractAddress);
+          
+                    // Correctly format parameters
+                    const contractTransaction = await contract.methods.addTransaction(
+                      accounts[0], // Replace with the correct user address
+                      1, // Replace with the correct item ID
+                      totalPrice.toFixed(0), // Correctly format to an integer value
+                    ).send({ from: accounts[0] });
+          
+                    console.log('Checkout successful:', "tx: " + contractTransaction.transactionHash + "\n date: " + data.message);
+                    localStorage.removeItem('cart');
+                    //window.location.href="/confirmation"
+                  } else {
+                    // Handle server-side checkout failure
+                    console.error('Checkout failed:', data.message);
+                    //window.location.href="/activity"
+                  }
+                } else {
+                  const jsonResponse = await response.json();
+                  console.error('Checkout failed:', jsonResponse);
                 }
+              } catch (error) {
+                console.error('An error occurred:', error);
+              }
             }
-        };
+          };
+          
 
         return (
             <>
