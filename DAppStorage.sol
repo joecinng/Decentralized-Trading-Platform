@@ -11,7 +11,7 @@ contract DAppStorage {
     }
 
     Transaction[] public transactions;
-    uint256 public transactionCount = 0;
+    uint256 public transactionCount;
 
 
     function addTransaction(address _userAddress, uint256 _itemId, uint256 _totalPrice) public {
