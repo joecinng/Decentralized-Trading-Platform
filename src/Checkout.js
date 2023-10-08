@@ -73,14 +73,24 @@
                     // Interaction with your contract
                     const contract = new web3.eth.Contract(abi, contractAddress);
           
-                    // Correctly format parameters
-                    const contractTransaction = await contract.methods.addTransaction(
-                      accounts[0], // Replace with the correct user address
-                      1, // Replace with the correct item ID
-                      totalPrice.toFixed(0), // Correctly format to an integer value
-                    ).send({ from: accounts[0] });
+                    try {
+                        const receipt = await contract.methods.addTransaction(
+                            accounts[0],          // User address
+                            1,                    // Item ID (This is hardcoded to 1, ensure this is what you want)
+                            totalPrice.toFixed(0) // Assuming totalPrice is a float and you want to convert it to an integer
+                        ).send({
+                            from: accounts[0],    // Sending address
+                            gas: 100000         // Optionally set the gas limit. Adjust as necessary.
+                        });
+                    
+                        console.log('Transaction was successful:', receipt);
+                    
+                    } catch (error) {
+                        console.error('Error executing the transaction:', error);
+                    }
+                    
           
-                    console.log('Checkout successful:', "tx: " + contractTransaction.transactionHash + "\n date: " + data.message);
+                    
                     localStorage.removeItem('cart');
                     //window.location.href="/confirmation"
                   } else {
