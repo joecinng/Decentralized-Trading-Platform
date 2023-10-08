@@ -3,42 +3,70 @@
     Joe Cin NG (102765534)
     Miran Abeyewardene (103824193) */
 
-    import React, { useState } from 'react';
+    import React, { useState, useEffect } from 'react';
     import './css/App.css';
     import { useCart } from './CartContext';
+    import Web3 from 'web3';
 
-    
     function Checkout() {
+        
         const { cart, totalPrice } = useCart();
-        const handleCheckout = async () => {
-            const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`; // Replace 1 with actual user ID if dynamic
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cart)
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.status === "success") {
-                        // Handle success
-                        console.log('Checkout successful:', data.message);
-                        localStorage.removeItem('cart')
-                        window.location.href="/confirmation"
-                    } else {
-                        // Handle server-side checkout failure
-                        console.error('Checkout failed:', data.message);
-                        window.location.href="/activity"
+        const [accounts, setAccounts] = useState([]);
+        const [isConnected, setIsConnected] = useState(false);
+
+        useEffect(() => {
+            // Function to connect to MetaMask
+            const connectWallet = async () => {
+                if (window.ethereum) {
+                    try {
+                        const accountArray = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        setAccounts(accountArray);
+                        setIsConnected(accountArray && accountArray.length > 0);
+                        console.log("account" + accountArray);
+                    } catch (error) {
+                        console.error('Error connecting to MetaMask:', error);
+                        setIsConnected(false);
                     }
                 } else {
-                    const jsonResponse = await response.json();
-                    console.error('Checkout failed:', jsonResponse);
-                   
+                    console.log('MetaMask not detected');
+                    setIsConnected(false);
                 }
-            } catch (error) {
-                console.error('An error occurred:', error);
+            };
+            connectWallet();
+        }, []);
+
+        const handleCheckout = async () => {
+            if (isConnected) {
+                const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cart)
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.status === "success") {
+                            // Handle success
+                            console.log('Checkout successful:', data.message);
+                            localStorage.removeItem('cart')
+                            //window.location.href="/confirmation"
+                        } else {
+                            // Handle server-side checkout failure
+                            console.error('Checkout failed:', data.message);
+                            //window.location.href="/activity"
+                        }
+                    } else {
+                        const jsonResponse = await response.json();
+                        console.error('Checkout failed:', jsonResponse);
+                    
+                    }
+                } catch (error) {
+                    console.error('An error occurred:', error);
+                }
             }
         };
 

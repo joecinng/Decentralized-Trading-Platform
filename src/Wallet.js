@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import Nav from './Nav';
 import { useCart } from './CartContext';
 import './css/App.css';
+import Web3 from 'web3';
 
 {/* Checkout page, this is where users view their shopping cart and total amount */}
 function Checkout() {
@@ -17,30 +18,34 @@ function Checkout() {
   const [operationSuccess, setOperationSuccess] = useState(false);
   const [balance, setBalance] = useState('0');
   const [isConnected, setIsConnected] = useState(false);
+  const web3 = new Web3("http://127.0.0.1:7545");
 
   useEffect(() => {
     const fetchAccountDetails = async () => {
-        if (window.ethereum) {
-            try {
-                const accountArray = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                setAccounts(accountArray);
-                setIsConnected(accountArray && accountArray.length > 0);
+      if (window.ethereum) {
+        try {
+          const accountArray = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          setAccounts(accountArray);
+          setIsConnected(accountArray && accountArray.length > 0);
 
-                if (accountArray.length > 0) {
-                    const accountBalance = await window.ethereum.request({ method: 'eth_getBalance', params: [accountArray[0]] });
-                    setBalance(accountBalance);
+          if (accountArray.length > 0) {
+            const accountBalanceWei = await window.ethereum.request({ method: 'eth_getBalance', params: [accountArray[0]] });
 
-                    // Send account details to backend
-                    await storeAccountDetails(accountArray[0], accountBalance);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                setIsConnected(false);
-            }
-        } else {
-            console.log('MetaMask not detected');
-            setIsConnected(false);
+            const accountBalanceEther = web3.utils.fromWei(accountBalanceWei, 'ether');
+
+            setBalance(accountBalanceEther);
+
+            // Send account details to backend
+            await storeAccountDetails(accountBalanceWei, accountBalanceEther);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          setIsConnected(false);
         }
+      } else {
+        console.log('MetaMask not detected');
+        setIsConnected(false);
+      }
     };
 
     const storeAccountDetails = async (address, balance) => {
@@ -60,7 +65,7 @@ function Checkout() {
           const data = await response.json();
           if (response.ok && data.status === "success") {
               setMessage("The balance has been synchronized.");
-              setOperationSuccess(true);
+              setOperationSuccess(true);                       
           } else {
               throw new Error(`Server error: ${data.message}`);
           }
