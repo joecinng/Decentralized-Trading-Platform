@@ -5,6 +5,7 @@
     Miran Abeyewardene (103824193) */
 
 import React, { createContext, useContext, useState,useEffect, useMemo } from 'react'
+import { showNotification } from './Notifications';
 
 // This is for all the functions of the cart
 const CartContext = createContext();
@@ -34,8 +35,9 @@ export const CartProvider = ({ children }) => {
     const addToCart = (asset) => {
         if (!cart.some(item => item.id === asset.id)) {
             setCart(prevCart => [...prevCart, asset]);
+            showNotification('Success','Item is added to the cart successfully','success')
         } else {
-            console.log("Item already in cart.");
+            showNotification('Error','Item already in the cart','danger')
         }
     };
 

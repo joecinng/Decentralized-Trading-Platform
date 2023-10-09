@@ -14,13 +14,15 @@ import Explore from './Explore';
 import Wallet from './Wallet';
 import Confirmation from './Confirmation';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { CartProvider } from './CartContext'; // Import the CartProvider
+import { CartProvider } from './CartContext'; 
+import { ReactNotifications } from 'react-notifications-component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <Router>
+      <ReactNotifications />
       <CartProvider> {/* This is for the cart icon to be added to each of the pages */}
         <Routes>
           {/* Login page route */}

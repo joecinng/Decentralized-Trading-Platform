@@ -97,7 +97,7 @@ def login(data: LoginData):
     connection.close()
     
     if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
+        return {"status": "error", "message": "Incorrect email or password"}
     
     return {"status": "success", "message": "Logged in successfully", "user_id": user["id"]}
 
@@ -110,23 +110,29 @@ def register(data: RegisterData):
     connection = mysql.connector.connect(**DATABASE_CONFIG)
     cursor = connection.cursor(dictionary=True)
 
-    # Check if the user already exists
-    cursor.execute("SELECT * FROM users WHERE email=%s", (data.username,))
-    user = cursor.fetchone()
+    try:
+        # Check if the user already exists
+        cursor.execute("SELECT * FROM users WHERE email=%s", (data.username,))
+        user = cursor.fetchone()
 
-    if user:
+        if user:
+            return {"status": "error", "message": "Email already registered"}
+
+        # If the user doesn't exist, then insert a new user
+        cursor.execute("INSERT INTO users (email, password) VALUES (%s, %s)", (data.username, data.password))
+        connection.commit()
+        user_id = cursor.lastrowid
+
+        return {"status": "success", "message": "Registered successfully", "user_id": user_id}
+
+    except mysql.connector.Error as err:
+        # Handle database errors
+        connection.rollback()
+        return {"status": "error", "message": "Database error", "user_id": user_id}
+
+    finally:
         cursor.close()
-        connection.close()
-        raise HTTPException(status_code=400, detail="Username already registered")
-
-    # If the user doesn't exist, then insert a new user
-    cursor.execute("INSERT INTO users (email, password) VALUES (%s, %s)", (data.username, data.password))
-    connection.commit()
-    user_id = cursor.lastrowid
-    cursor.close()
-    connection.close()
-
-    return {"status": "success", "message": "Registered successfully", "user_id": user_id}    
+        connection.close()  
 
 @app.get("/transactions/")
 def read_transactions():

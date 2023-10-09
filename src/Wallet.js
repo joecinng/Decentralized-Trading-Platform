@@ -78,7 +78,6 @@ function Checkout() {
     fetchAccountDetails();
 }, []);
 
-
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
@@ -105,11 +104,11 @@ function Checkout() {
               <h4 className="text-center my-4">Connect Wallet</h4>
               <p className="pb-3 fw-bold">Connect your wallet by installing metamask on your browser and they'll do the rest for you</p>
               <div className="mb-3">
-              {message && 
-            <div className={`alert ${operationSuccess ? "alert-success" : "alert-danger"}`} role="alert">
-                {message}
-            </div>
-        }
+                {message && 
+                  <div className={`alert ${operationSuccess ? "alert-success" : "alert-danger"}`} role="alert">
+                    {message}
+                  </div>
+                }
                 <a href="/wallet" className={`w-100 text-decoration-none d-flex align-items-center justify-content-center rounded-5 fw-bold py-3 bg-dark text-light ${isConnected ? 'disabled' : ''}`} onClick={connectWallet} id="Connect">
                   <span>{isConnected ? 'Connected' : 'Connect via MetaMask'}</span>
                   <span class="material-symbols-outlined mx-2 fs-5">wallet</span>

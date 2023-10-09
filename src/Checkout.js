@@ -7,6 +7,7 @@
     import './css/App.css';
     import { useCart } from './CartContext';
     import Web3 from 'web3';
+    import { showNotification } from './Notifications';
 
     function Checkout() {
         const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256","name":"_itemId","type":"uint256"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"transactionId","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"itemId","type":"uint256"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}];
@@ -31,6 +32,7 @@
                     }
                 } else {
                     console.log('MetaMask not detected');
+
                     setIsConnected(false);
                 }
             };
@@ -41,6 +43,16 @@
             const receiver = '0x6d47F9C92abA87334AE51fd358B7b035B6543d8c';
           
             if (isConnected) {
+              
+                const accountBalanceWei = await web3.eth.getBalance(accounts[0]);
+
+                const accountBalanceEther = web3.utils.fromWei(accountBalanceWei, 'ether');
+
+                if (totalPrice > accountBalanceEther) {
+                    showNotification('Error', 'Insufficient funds in your wallet', 'danger');
+                    return;
+                }
+            
               const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
               try {
                 const response = await fetch(endpoint, {
@@ -89,8 +101,6 @@
                     } catch (error) {
                         console.error('Error executing the transaction:', error);
                     }
-                    
-          
                     
                     localStorage.removeItem('cart');
                     //window.location.href="/confirmation"

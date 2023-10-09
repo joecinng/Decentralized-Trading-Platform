@@ -15,19 +15,19 @@ function removeSession() {
     localStorage.removeItem('isLoggedIn')
 }
 
- {/* This is to make sure the cart feature is present so you can view, count and show the users address and balance on the cart component */}
- {/* This is reused for almost every page and so all these parameters must be passed  */}
+{/* This is to make sure the cart feature is present so you can view, count and show the users address and balance on the cart component */}
+{/* This is reused for almost every page and so all these parameters must be passed  */}
 function Nav({ cart, count }) {
     const [balance, setTemp] = useState([]);
     const [address, setAdd] = useState([]);
     const [name, setName] = useState(null);
-
-    
     const { removeFromCart, totalPrice } = useCart();
+
     async function logout() {
-                    removeSession();
-                    window.location.href="/login"
+        removeSession();
+        window.location.href="/"
     };
+
     useEffect(() => {
         // This function fetches data from the API
         async function fetchData() {
@@ -44,9 +44,10 @@ function Nav({ cart, count }) {
             console.log("Error fetching the data: ", error);
           }
         }
-     // Invoke the fetchData function
-  fetchData();
-}, []);
+        // Invoke the fetchData function
+        fetchData();
+    }, []);
+
     return (
         <nav className="navbar position-fixed navbar-expand-sm bg-dark shadow-lg w-100 nav-order">
             <a href="/" className="navbar-brand text-white px-3">
@@ -67,7 +68,13 @@ function Nav({ cart, count }) {
                         <h5><a href="/activity" className="nav-link text-white">Activity</a></h5>
                     </li>
                     <li className="nav-item p-2">
-                        <h5><a href="/wallet" className="nav-link text-white">Wallet</a></h5>
+                        <h5>
+                            {name!=null ? (
+                                <a href="/wallet" className="nav-link text-white">Wallet</a>
+                            ) : (
+                                <a href="/login" className="nav-link text-white">Wallet</a> 
+                            )}
+                        </h5>
                     </li>
                 </ul>
                 {/* Dropdown for the shopping cart where it shows the added cart items */}
@@ -114,43 +121,44 @@ function Nav({ cart, count }) {
                              {/* Make sure the cart is still working*/}
                             {cart.length > 0 && (
                                 <div className="p-2">
-                                    <a href="/checkout" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-3 fw-bold">Buy for {totalPrice} ETH</a>
+                                    {name!=null ? (
+                                        <a href="/checkout" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-3 fw-bold">Buy for {totalPrice} ETH</a>
+                                    ): (
+                                        <a href="/login" className="btn btn-light text-dark rounded-5 w-100 mt-2 p-3 fw-bold">Buy for {totalPrice} ETH</a>
+                                    )}
                                 </div>
                             )}
                         </div>
                     </div>
 
                     <div className="nav-item">
-    {name!=null ? 
-        (
-            <div className="profile">
-                <span className="navbar-item text-white rounded-5 btn py-4 px-3">
-                    <span className="material-symbols-outlined fs-5">account_circle</span>
-                </span>
-                <div className="dropdown-profile shadow end-0 position-absolute p-4 text-white bg-dark">
-                    <h5>Hello, {name}</h5>
-                    <p className="my-4">
-                        <p>Wallet Address 
-                            <span className="material-symbols-outlined float-end fs-5 cart-copy-icon">content_copy</span>
-                        </p>
-                        <b>{address}</b>
-                    </p>
-                    <p>Wallet Balance</p>
-                    <div className="d-flex align-items-center">
-                        <img src={EthIcon} alt='Eth Icon' className="cart-eth-icon" />
-                        <h6 className="fw-bold text-decoration-none text-white mb-0 ms-2">{balance} ETH</h6>
+                        {name!=null ? (
+                            <div className="profile">
+                                <span className="navbar-item text-white rounded-5 btn py-4 px-3">
+                                    <span className="material-symbols-outlined fs-5">account_circle</span>
+                                </span>
+                                <div className="dropdown-profile shadow end-0 position-absolute p-4 text-white bg-dark">
+                                    <h5>Hello, {name}</h5>
+                                    <p className="my-4">
+                                        <p>Wallet Address 
+                                            <span className="material-symbols-outlined float-end fs-5 cart-copy-icon">content_copy</span>
+                                        </p>
+                                        <b>{address}</b>
+                                    </p>
+                                    <p>Wallet Balance</p>
+                                    <div className="d-flex align-items-center">
+                                        <img src={EthIcon} alt='Eth Icon' className="cart-eth-icon" />
+                                        <h6 className="fw-bold text-decoration-none text-white mb-0 ms-2">{balance} ETH</h6>
+                                    </div>
+                                    <div className="p-2">
+                                        <button className="btn btn-danger rounded-5 w-100 p-3 mt-4" onClick={logout}>Logout</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <a className="btn btn-outline-success my-3" href="/login">Login</a> // Green Login button when name is null
+                        )}
                     </div>
-                    <div className="p-2">
-                        <button className="btn btn-danger rounded-5 w-100 p-3 mt-4" onClick={logout}>Logout</button>
-                    </div>
-                </div>
-            </div>
-        ) : (
-            <a className="btn btn-outline-success my-2 " href="/login">Login</a> // Green Login button when name is null
-        )
-    }
-</div>
-
                 </div>
             </div>
         </nav>
