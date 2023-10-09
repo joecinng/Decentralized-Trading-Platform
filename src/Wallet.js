@@ -36,8 +36,8 @@ function Checkout() {
             setBalance(accountBalanceEther);
 
             // Send account details to backend
-            await storeAccountDetails(accountBalanceWei, accountBalanceEther);
-          }
+            await storeAccountDetails(accountArray[0], accountBalanceEther);
+          } 
         } catch (error) {
           console.error('Error:', error);
           setIsConnected(false);
@@ -50,29 +50,29 @@ function Checkout() {
 
     const storeAccountDetails = async (address, balance) => {
       try {
-          const endpoint = "http://127.0.0.1:8000/connect";  // Corrected endpoint path
-          const response = await fetch(endpoint, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  address: String(address),
-                  balance: String(balance),
-                  user: String(localStorage.getItem("userID")) // Remember to provide the user ID if it's required by your endpoint
-              })
-          });
-          const data = await response.json();
-          if (response.ok && data.status === "success") {
-              setMessage("The balance has been synchronized.");
-              setOperationSuccess(true);                       
-          } else {
-              throw new Error(`Server error: ${data.message}`);
-          }
+        const endpoint = "http://127.0.0.1:8000/connect";  // Corrected endpoint path
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            address: String(address),
+            balance: String(balance),
+            user: String(localStorage.getItem("userID")) // Remember to provide the user ID if it's required by your endpoint
+          })
+        });
+        const data = await response.json();
+        if (response.ok && data.status === "success") {
+          setMessage("The balance has been synchronized.");
+          setOperationSuccess(true);                       
+        } else {
+          throw new Error(`Server error: ${data.message}`);
+        }
       } catch (error) {
-          console.error('Error storing account details:', error);
-          setMessage(error.message);
-          setOperationSuccess(false);
+        console.error('Error storing account details:', error);
+        setMessage(error.message);
+        setOperationSuccess(false);
       }
   };
     fetchAccountDetails();

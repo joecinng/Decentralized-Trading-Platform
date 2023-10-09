@@ -34,7 +34,6 @@ def read_items(type: str):
     cursor = connection.cursor(dictionary=True)
     if (type=="All"):
         cursor.execute("SELECT * FROM assets")
-  
     else:
         cursor.execute("SELECT * FROM assets where category=%s", (type,))
     items = cursor.fetchall()
@@ -59,10 +58,11 @@ def checkout(cart: list[dict], user_id: int, total_price: float):
     received_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     if balance < total_price:
+        str = 0
         for item in cart:
             cursor.execute(
-                "INSERT INTO transactions (user_id, image_url, product_name, hash, total, received, status) VALUES (%s, %s, %s, %s, %s, %s, 'Denied')",
-                (user_id, item["image_url"], item["name"], hash_val, item["current_price"], received_date)
+                "INSERT INTO transactions (user_id, asset_id, hash, received, status) VALUES (%s, %s, %s, %s, 'Denied')",
+                (user_id, item["id"], hash_val, received_date)
             )
         connection.commit()
         cursor.close()
@@ -72,15 +72,15 @@ def checkout(cart: list[dict], user_id: int, total_price: float):
     else:
         for item in cart:
             cursor.execute(
-                "INSERT INTO transactions (user_id, image_url, product_name, hash, total, received, status) VALUES (%s, %s, %s, %s, %s, %s, 'Pending')",
-                (user_id, item["image_url"], item["name"], hash_val, item["current_price"], received_date)
+                "INSERT INTO transactions (user_id, asset_id, hash, received, status) VALUES (%s, %s, %s, %s, 'Pending')",
+                (user_id, item["id"], hash_val, received_date)
             )
         cursor.execute("UPDATE users SET balance = balance - %s WHERE id = %s", (total_price, user_id))
         connection.commit()
         cursor.close()
         connection.close()
 
-        return {"status": "success", "message": "Checkout completed " + str(tx_receipt)}
+        return {"status": "success", "message": "Checkout completed"}
 
   
 class LoginData(BaseModel):
@@ -100,10 +100,10 @@ def login(data: LoginData):
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     
     return {"status": "success", "message": "Logged in successfully", "user_id": user["id"]}
+
 class RegisterData(BaseModel):
     username: str
     password: str
-
 
 @app.post("/register/")
 def register(data: RegisterData):
@@ -132,7 +132,12 @@ def register(data: RegisterData):
 def read_transactions():
     connection = mysql.connector.connect(**DATABASE_CONFIG)
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM transactions")
+    cursor.execute("""
+        SELECT t.*, a.image_url, a.name, a.current_price
+        FROM transactions AS t
+        JOIN assets AS a 
+        ON t.asset_id = a.id
+    """)
     transactions = cursor.fetchall()
     cursor.close()
     connection.close()

@@ -77,11 +77,12 @@
                         const receipt = await contract.methods.addTransaction(
                             accounts[0],          // User address
                             1,                    // Item ID (This is hardcoded to 1, ensure this is what you want)
-                            totalPrice.toFixed(0) // Assuming totalPrice is a float and you want to convert it to an integer
+                            5 // Assuming totalPrice is a float and you want to convert it to an integer
                         ).send({
                             from: accounts[0],    // Sending address
-                            gas: 100000         // Optionally set the gas limit. Adjust as necessary.
+                            gas: "100000"         // Optionally set the gas limit. Adjust as necessary.
                         });
+
                     
                         console.log('Transaction was successful:', receipt);
                     
