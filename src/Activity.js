@@ -17,16 +17,17 @@ function Activity() {
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/transactions/`)
     .then(response => {
-  if (Array.isArray(response.data)) {
-    setTransactionHistory(response.data);
-  } else {
-    console.warn("Unexpected data structure from API");
-  }
-})
-      .catch(error => {
-        console.error(`Error occurred while fetching ${cryptoType} transaction history:`, error);
-      });
+      if (Array.isArray(response.data)) {
+        setTransactionHistory(response.data);
+      } else {
+        console.warn("Unexpected data structure from API");
+      }
+    })
+    .catch(error => {
+      console.error(`Error occurred while fetching ${cryptoType} transaction history:`, error);
+    });
   }, [cryptoType]);
+
   return (
     <>
     <Nav count={cart.length} cart={cart} />

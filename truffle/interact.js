@@ -4,46 +4,40 @@ let provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545");
 
 let web3 = new Web3(provider);
 
-const contractAddress = '0x8654Ca12026123932f9e23F42204632eb36B20d2'
+const contractAddress = '0x5605187093C6EC5079d078E0Fbd200B15DF43A1b';
 
-const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256","name":"_itemId","type":"uint256"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"testFunction","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"transactionId","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"itemId","type":"uint256"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}]
+const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256[]","name":"_transactionIds","type":"uint256[]"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getAllTransaction","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"dbTransactionIds","type":"uint256"}],"stateMutability":"view","type":"function"}];
 
 const NumberStorage = new web3.eth.Contract(abi, contractAddress);
 
 async function main() {
 
-    await NumberStorage.methods.getTransactionsCount()
-    .call()
-    .then((result) => {
-        console.log(`Transaction count: ${result}`);
+    const senderAddress = '0xc83e2c396195d1258D0F1f25B8821b928aa764Df'; 
+    const transactionIds = [3]; 
+    const totalPrice = web3.utils.toWei('2', 'ether');
+
+    // Prepare the transaction object
+    const transactionObject = {
+        from: senderAddress,
+        to: contractAddress,
+        value: totalPrice,
+        gas: 1000000
+    };
+
+    // Call the addTransaction function
+    await NumberStorage.methods.addTransaction(senderAddress, transactionIds, totalPrice)
+    .send(transactionObject)
+    .on('transactionHash', function (hash) {
+        console.log('Transaction Hash: ' + hash);
     })
-    .catch((error) => {
-        console.error(error);
+    .on('error', function (error) {
+        console.error('Transaction Error: ' + error);
     });
 
-    await NumberStorage.methods.addTransaction("0x0A8a30C1462E6402eaa4CDFE82a5715e0aC0a9d5", 1, 15)
-    .send({ from: '0x207cf86ceeC1a74e0bffD8BBbdE7F03466CFe6Fb', gas: '1000000' })
-    .on('transactionHash', (hash) => {
-        console.log(`Transaction hash: ${hash}`);
-    })
-    .on('error', (error) => {
-        console.error(error); 
-    });
-
-
-    await NumberStorage.methods.testFunction()
+    await NumberStorage.methods.getAllTransaction()
     .call()
     .then((result) => {
-        console.log(`test function: ${result}`);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-    await NumberStorage.methods.getTransaction(0)
-    .call()
-    .then((result) => {
-        console.log(`transaction 1: \n transaction id: ${result[0]} \n User address: ${result[1]} \n item id: ${result[2]} \n total price: ${result[3]}`);
+        console.log(`${result}`);
     })
     .catch((error) => {
         console.error(error);

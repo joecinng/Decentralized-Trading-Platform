@@ -3,15 +3,15 @@
     Joe Cin NG (102765534)
     Miran Abeyewardene (103824193) */
 
-    import React, { useState, useEffect } from 'react';
-    import './css/App.css';
-    import { useCart } from './CartContext';
-    import Web3 from 'web3';
-    import { showNotification } from './Notifications';
+import React, { useState, useEffect } from 'react';
+import './css/App.css';
+import { useCart } from './CartContext';
+import Web3 from 'web3';
+import { showNotification } from './Notifications';
 
     function Checkout() {
-        const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256","name":"_itemId","type":"uint256"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"transactionId","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"itemId","type":"uint256"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}];
-        const contractAddress = "0xD17754D1212c63f260670dBB62dB90007fc267c0";
+        const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256[]","name":"_transactionIds","type":"uint256[]"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"}],"name":"getBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256[]","name":"","type":"uint256[]"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}];
+        const contractAddress = "0x6bAA795c29E06F9BCaA12dab47082715275D3eCD";
         const { cart, totalPrice } = useCart();
         const [accounts, setAccounts] = useState([]);
         const [isConnected, setIsConnected] = useState(false);
@@ -66,35 +66,36 @@
                 if (response.ok) {
                   const data = await response.json();
                   if (data.status === "success") {
-                    // Correctly formatted numeric value in ether
-                    const etherValue = web3.utils.toWei(totalPrice.toString(), 'ether');
-          
-                    // Define the gas price you want to use (in wei)
-                    const gasPriceWei = web3.utils.toWei('50', 'gwei'); // Example: 50 Gwei
-          
-                    // Send ETH to receiver with the specified gas price
-                    const ethTransaction = await web3.eth.sendTransaction({
-                        from: accounts[0],
-                        to: receiver,
-                        value: etherValue,
-                        gasPrice: gasPriceWei, // Set your desired gas price here
-                    });
-          
-                    console.log('Transaction Hash:', ethTransaction.transactionHash);
-          
                     // Interaction with your contract
                     const contract = new web3.eth.Contract(abi, contractAddress);
           
                     try {
-                        const receipt = await contract.methods.addTransaction(
-                            accounts[0],          // User address
-                            1,                    // Item ID (This is hardcoded to 1, ensure this is what you want)
-                            5 // Assuming totalPrice is a float and you want to convert it to an integer
-                        ).send({
-                            from: accounts[0],    // Sending address
-                            gas: "100000"         // Optionally set the gas limit. Adjust as necessary.
-                        });
 
+                        const transactionIds = [1, 2]; // Replace with the transaction IDs you want to associate with this transaction
+                        const price = web3.utils.toWei(totalPrice.toString(), 'ether'); // Replace with the total price in Ether
+
+                        // Prepare the transaction object
+                        const transactionObject = {
+                            from: accounts[0],
+                            to: contractAddress,
+                            value: price,
+                            gas: 1000000
+                        };
+                        // Call the addTransaction function
+                        const receipt = await contract.methods.addTransaction(accounts[0], transactionIds, price)
+                            .send(transactionObject)
+                            .on('transactionHash', function (hash) {
+                                console.log('Transaction Hash: ' + hash);
+                            })
+                            .on('confirmation', function (confirmationNumber, receipt) {
+                                console.log('Confirmation Number: ' + confirmationNumber);
+                                if (confirmationNumber === 2) {
+                                    console.log('Transaction confirmed.');
+                                }
+                            })
+                            .on('error', function (error) {
+                                console.error('Transaction Error: ' + error);
+                            });
                     
                         console.log('Transaction was successful:', receipt);
                     
@@ -103,11 +104,11 @@
                     }
                     
                     localStorage.removeItem('cart');
-                    //window.location.href="/confirmation"
+                    window.location.href="/confirmation"
                   } else {
                     // Handle server-side checkout failure
                     console.error('Checkout failed:', data.message);
-                    //window.location.href="/activity"
+                    window.location.href="/activity"
                   }
                 } else {
                   const jsonResponse = await response.json();
@@ -125,7 +126,7 @@
                 <div className="App w-100">
                     <div className="container-fluid col-sm-12 mx-auto bg-dark rounded-5">
                         <div className="row bg-dark h-100 col-sm-12 mx-auto">
-                            <div className="col-sm-4 bg-light shadow mx-auto p-5 m-5 rounded-5">
+                            <div className="col-sm-5 bg-light shadow mx-auto p-5 m-5 rounded-5">
                                 <h2 className="text-center fw-bold mb-4">Checkout</h2>
                                 <hr />
     

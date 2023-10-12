@@ -140,9 +140,7 @@ function Nav({ cart, count }) {
                                 <div className="dropdown-profile shadow end-0 position-absolute p-4 text-white bg-dark">
                                     <h5>Hello, {name}</h5>
                                     <p className="my-4">
-                                        <p>Wallet Address 
-                                            <span className="material-symbols-outlined float-end fs-5 cart-copy-icon">content_copy</span>
-                                        </p>
+                                        <p>Wallet Address</p>
                                         <b>{address}</b>
                                     </p>
                                     <p>Wallet Balance</p>

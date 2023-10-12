@@ -1,3 +1,8 @@
+/* Team 47: BlockMania 
+    Stefan Ralph Kumarasinghe (103804645)
+    Joe Cin NG (102765534)
+    Miran Abeyewardene (103824193) */
+
 import React, { useState, useEffect } from 'react';
 import Nav from './Nav';
 import { useCart } from './CartContext';
@@ -39,13 +44,9 @@ function Explore() {
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
-    setSearch(value);
-    if (value === '') {
-      setFilteredAssets(filteredAssets);
-    } else {
-      const filtered = filteredAssets.filter(asset => asset.name.toLowerCase().includes(value.toLowerCase()));
-      setTemp(filtered);
-    }
+    setSearch(value); 
+    const filtered = filteredAssets.filter(asset => asset.name.toLowerCase().includes(value.toLowerCase()));
+    setTemp(filtered);
   };
 
   return (
@@ -102,7 +103,7 @@ function Explore() {
                 className="form-control mx-auto text-white bg-dark p-3 mb-4" 
                 placeholder="Search what to buy..." 
                 value={search} 
-                onChange={handleSearchChange} />
+                onInput={handleSearchChange} />
             </div>
           </div>
 

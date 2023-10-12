@@ -58,12 +58,6 @@ def checkout(cart: list[dict], user_id: int, total_price: float):
     received_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     if balance < total_price:
-        str = 0
-        for item in cart:
-            cursor.execute(
-                "INSERT INTO transactions (user_id, asset_id, hash, received, status) VALUES (%s, %s, %s, %s, 'Denied')",
-                (user_id, item["id"], hash_val, received_date)
-            )
         connection.commit()
         cursor.close()
         connection.close()    
@@ -143,6 +137,7 @@ def read_transactions():
         FROM transactions AS t
         JOIN assets AS a 
         ON t.asset_id = a.id
+        ORDER BY t.received
     """)
     transactions = cursor.fetchall()
     cursor.close()
