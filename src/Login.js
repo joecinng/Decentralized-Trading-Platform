@@ -33,7 +33,10 @@ function Login() {
             if (data.status === "success") {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userID', data.user_id);
-                window.location.href = "/";
+                showNotification('Success', data.message, 'success');
+                setTimeout(function() {
+                    window.location.href = '/';
+                  }, 2000);
             } else {
                 showNotification('Error', data.message, 'danger');
             }
