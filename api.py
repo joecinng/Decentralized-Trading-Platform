@@ -1,3 +1,8 @@
+# Team 47: BlockMania 
+#   Stefan Ralph Kumarasinghe (103804645)
+#   Joe Cin NG (102765534)
+#   Miran Abeyewardene (103824193) 
+    
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
@@ -69,6 +74,8 @@ def checkout(cart: list[dict], user_id: int, total_price: float):
                 "INSERT INTO transactions (user_id, asset_id, hash, received, status) VALUES (%s, %s, %s, %s, 'Pending')",
                 (user_id, item["id"], hash_val, received_date)
             )
+            item_id = int(item["id"])
+            cursor.execute("UPDATE assets SET availability = false WHERE id = %s", (item_id,))
         cursor.execute("UPDATE users SET balance = balance - %s WHERE id = %s", (total_price, user_id))
         connection.commit()
         cursor.close()
@@ -76,7 +83,6 @@ def checkout(cart: list[dict], user_id: int, total_price: float):
 
         return {"status": "success", "message": "Checkout completed"}
 
-  
 class LoginData(BaseModel):
     username: str
     password: str
@@ -129,16 +135,27 @@ def register(data: RegisterData):
         connection.close()  
 
 @app.get("/transactions/")
-def read_transactions():
+def read_transactions(userId: int):
     connection = mysql.connector.connect(**DATABASE_CONFIG)
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT t.*, a.image_url, a.name, a.current_price
-        FROM transactions AS t
-        JOIN assets AS a 
-        ON t.asset_id = a.id
-        ORDER BY t.received
-    """)
+    if (userId == 0) :
+        cursor.execute("""
+            SELECT t.*, a.image_url, a.name, a.current_price
+            FROM transactions AS t
+            JOIN assets AS a 
+            ON t.asset_id = a.id
+            WHERE a.availability = 1
+            ORDER BY t.received
+        """)
+    else:
+        cursor.execute("""
+            SELECT t.*, a.image_url, a.name, a.current_price
+            FROM transactions AS t
+            JOIN assets AS a 
+            ON t.asset_id = a.id
+            WHERE t.user_id = %s and a.availability = 1
+            ORDER BY t.received
+        """, (userId,))
     transactions = cursor.fetchall()
     cursor.close()
     connection.close()

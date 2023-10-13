@@ -116,7 +116,13 @@ function Explore() {
                     <span className="card-title w-50 h-50">{asset.name} #0000</span>
                     <span className="card-text"><h5>{asset.current_price} ETH</h5></span>
                   </div>
-                  <button className="btn btn-secondary rounded btn-block fw-bold" onClick={() => addToCart(asset)}>Add to Cart</button>
+                  {
+                    asset.availability == true ? (
+                      <button className="btn btn-secondary rounded btn-block fw-bold" onClick={() => addToCart(asset)}>Add to Cart</button>
+                    ) : (
+                      <button className="btn btn-secondary rounded btn-block fw-bold" disabled>Not available</button>
+                    )
+                  }
                 </div>
               </div>
             ))}

@@ -7,36 +7,36 @@ contract DAppStorage {
     struct Transaction {
         uint256 id;
         address userAddress;
-        uint256 dbTransactionIds;
+        uint256 dbAssetId;
     }
 
     Transaction[] public transactions;
     uint256 public transactionCount;
 
-    function addTransaction(address _userAddress, uint256[] memory _transactionIds, uint256 _totalPrice) public payable {
+    function addTransaction(address _userAddress, uint256[] memory _dbAssetId, uint256 _totalPrice) public payable {
         require(msg.value >= _totalPrice, "Insufficient payment");
+        for (uint256 i = 0; i < _dbAssetId.length; i++) {
+            require(!isTransactionIdUsed(_dbAssetId[i]), "Asset ID already exists");
+            transactions.push(Transaction(transactionCount, _userAddress, _dbAssetId[i]));
+            transactionCount++;
+        }
         if (msg.value > _totalPrice) {
             payable(msg.sender).transfer(msg.value - _totalPrice);
-        }
-        for (uint256 i = 0; i < _transactionIds.length; i++) {
-            require(!isTransactionIdUsed(_transactionIds[i]), "Transaction ID already exists");
-            transactions.push(Transaction(transactionCount, _userAddress, _transactionIds[i]));
-            transactionCount++;
         }
     }
 
     function getAllTransaction() public view returns (uint256[] memory) {
         require(transactionCount > 0, "Transaction does not exist");
-        uint256[] memory transactionArr = new uint256[](transactionCount);
+        uint256[] memory assetArr = new uint256[](transactionCount);
         for (uint256 i = 0; i < transactionCount; i++) {
-            transactionArr[i] = transactions[i].dbTransactionIds;
+            assetArr[i] = transactions[i].dbAssetId;
         }
-        return transactionArr;
+        return assetArr;
     }
 
-    function isTransactionIdUsed(uint256 _transactionId) internal view returns (bool) {
+    function isTransactionIdUsed(uint256 _dbAssetId) internal view returns (bool) {
         for (uint256 i = 0; i < transactionCount; i++) {
-            if (transactions[i].dbTransactionIds == _transactionId) {
+            if (transactions[i].dbAssetId == _dbAssetId) {
                 return true;
             }
         }

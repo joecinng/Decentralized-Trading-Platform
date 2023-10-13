@@ -17,7 +17,8 @@ CREATE TABLE `assets` (
   `description` text DEFAULT NULL,
   `current_price` decimal(15,2) NOT NULL,
   `image_url` varchar(1024) DEFAULT NULL,
-  `category` varchar(255) NOT NULL DEFAULT 'NFT'
+  `category` varchar(255) NOT NULL DEFAULT 'NFT',
+  `availability` boolean DEFAULT true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `assets` (`id`, `name`, `description`, `current_price`, `image_url`, `category`) VALUES
@@ -56,7 +57,7 @@ CREATE TABLE `transactions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `transactions` (`transaction_id`, `user_id`, `asset_id`, `hash`, `received`, `status`) VALUES
-(32, 2, 1, '918988', '2023-10-03 05:26:08', 'Denied'),
-(33, 2, 2, '918988', '2023-10-03 05:26:08', 'Denied'),
-(34, 2, 7, '959472', '2023-10-03 05:26:38', 'Pending'),
-(35, 2, 4, '959472', '2023-10-03 05:26:38', 'Pending');
+(32, 2, 1, '918988', '2023-10-03 05:26:08', 'Pending'),
+(33, 2, 2, '918988', '2023-10-03 05:26:08', 'Pending'),
+(34, 2, 7, '959472', '2023-10-03 05:26:38', 'Confirmed'),
+(35, 2, 4, '959472', '2023-10-03 05:26:38', 'Confirmed');

@@ -10,8 +10,8 @@ import Web3 from 'web3';
 import { showNotification } from './Notifications';
 
     function Checkout() {
-        const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256[]","name":"_transactionIds","type":"uint256[]"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"}],"name":"getBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_transactionId","type":"uint256"}],"name":"getTransaction","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256[]","name":"","type":"uint256[]"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransactionsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"totalPrice","type":"uint256"}],"stateMutability":"view","type":"function"}];
-        const contractAddress = "0x6bAA795c29E06F9BCaA12dab47082715275D3eCD";
+        const abi = [{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"uint256[]","name":"_dbAssetId","type":"uint256[]"},{"internalType":"uint256","name":"_totalPrice","type":"uint256"}],"name":"addTransaction","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getAllTransaction","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"dbAssetId","type":"uint256"}],"stateMutability":"view","type":"function"}];
+        const contractAddress = "0x58Aa61C30fFfC0ee70063eFca151DDc0C5d9cdfb";
         const { cart, totalPrice } = useCart();
         const [accounts, setAccounts] = useState([]);
         const [isConnected, setIsConnected] = useState(false);
@@ -39,9 +39,7 @@ import { showNotification } from './Notifications';
             connectWallet();
         }, []);
 
-        const handleCheckout = async () => {
-            const receiver = '0x6d47F9C92abA87334AE51fd358B7b035B6543d8c';
-          
+        const handleCheckout = async () => {          
             if (isConnected) {
               
                 const accountBalanceWei = await web3.eth.getBalance(accounts[0]);
@@ -52,71 +50,80 @@ import { showNotification } from './Notifications';
                     showNotification('Error', 'Insufficient funds in your wallet', 'danger');
                     return;
                 }
+
+                // Interaction with your contract
+                const contract = new web3.eth.Contract(abi, contractAddress);
+                var transactionStatus = false;
             
-              const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
-              try {
-                const response = await fetch(endpoint, {
-                  method: 'post',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(cart),
-                });
-          
-                if (response.ok) {
-                  const data = await response.json();
-                  if (data.status === "success") {
-                    // Interaction with your contract
-                    const contract = new web3.eth.Contract(abi, contractAddress);
-          
-                    try {
-
-                        const transactionIds = [1, 2]; // Replace with the transaction IDs you want to associate with this transaction
-                        const price = web3.utils.toWei(totalPrice.toString(), 'ether'); // Replace with the total price in Ether
-
-                        // Prepare the transaction object
-                        const transactionObject = {
-                            from: accounts[0],
-                            to: contractAddress,
-                            value: price,
-                            gas: 1000000
-                        };
-                        // Call the addTransaction function
-                        const receipt = await contract.methods.addTransaction(accounts[0], transactionIds, price)
-                            .send(transactionObject)
-                            .on('transactionHash', function (hash) {
-                                console.log('Transaction Hash: ' + hash);
-                            })
-                            .on('confirmation', function (confirmationNumber, receipt) {
-                                console.log('Confirmation Number: ' + confirmationNumber);
-                                if (confirmationNumber === 2) {
-                                    console.log('Transaction confirmed.');
-                                }
-                            })
-                            .on('error', function (error) {
-                                console.error('Transaction Error: ' + error);
-                            });
-                    
-                        console.log('Transaction was successful:', receipt);
-                    
-                    } catch (error) {
-                        console.error('Error executing the transaction:', error);
+                try {
+                    var assetsId = [];
+                    for (var item of cart) {
+                        assetsId.push(item["id"]);
                     }
-                    
-                    localStorage.removeItem('cart');
-                    window.location.href="/confirmation"
-                  } else {
-                    // Handle server-side checkout failure
-                    console.error('Checkout failed:', data.message);
-                    window.location.href="/activity"
-                  }
-                } else {
-                  const jsonResponse = await response.json();
-                  console.error('Checkout failed:', jsonResponse);
+
+                    const price = web3.utils.toWei(totalPrice.toString(), 'ether'); // Replace with the total price in Ether
+
+                    // Prepare the transaction object
+                    const transactionObject = {
+                        from: accounts[0],
+                        to: contractAddress,
+                        value: price,
+                        gas: 1000000
+                    };
+
+                    const receipt = await contract.methods.addTransaction(accounts[0], assetsId, price)
+                        .send(transactionObject)
+                        .on('transactionHash', function (hash) {
+                            console.log('Transaction Hash: ' + hash);
+                        })
+                        .on('receipt', (receipt) => {
+                            if (receipt.status) {
+                                console.log('Transaction successful' + receipt.status);
+                                console.log('Transaction was successful:', receipt);
+                                transactionStatus = true;
+                            } else {
+                                console.log('Transaction failed');
+                            }
+                        })
+                        .on('error', function (error) {
+                            console.error('Transaction Error: ' + error);
+                        });
+
+                } catch (error) {
+                    console.error('Error executing the transaction:', error);
                 }
-              } catch (error) {
-                console.error('An error occurred:', error);
-              }
+            
+                if (transactionStatus) {
+                    const endpoint = `http://127.0.0.1:8000/checkout/?user_id=${localStorage.getItem('userID')}&total_price=${totalPrice.toFixed(2)}`;
+                    try {
+                        const response = await fetch(endpoint, {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(cart),
+                        });
+                    
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.status === "success") {
+                                showNotification("Success", data.message, "success");
+                                setTimeout(function() {
+                                    localStorage.removeItem('cart');
+                                    window.location.href = "/confirmation";
+                                }, 2000);
+                                
+                            } else {
+                                showNotification("Checkout error", data.message, "danger");
+                            }
+                        } else {
+                        const jsonResponse = await response.json();
+                        console.error('Checkout failed:', jsonResponse);
+                        }
+                    } catch (error) {
+                        console.error('An error occurred:', error);
+                    }
+                }
             }
           };
           
