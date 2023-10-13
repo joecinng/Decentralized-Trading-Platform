@@ -21,8 +21,12 @@ function Explore() {
     try {
       let response = await fetch('http://127.0.0.1:8000/items/?type=' + id);
       let data = await response.json();
-      setTemp(data);
-      setFilteredAssets(data);
+      if(data.status === "error") {
+        setTemp(null);
+      } else {
+        setTemp(data);
+        setFilteredAssets(data);
+      }
     } catch (error) {
       console.error("Error fetching the data: ", error);
     }
@@ -108,24 +112,28 @@ function Explore() {
           </div>
 
           <div className="w-100 row align-items-center">
-            {temp.map(asset => (
-              <div className="col-xl-3">
-                <div key={asset.id} className="p-3 my-3 bg-dark shadow-lg card text-white rounded border border-secondary">
-                  <img className="w-100 image-block card-img" src={asset.image_url} alt="item" style={{ width: '100%', height: '35vh' }} />
-                  <div className="card-body">
-                    <span className="card-title w-50 h-50">{asset.name} #0000</span>
-                    <span className="card-text"><h5>{asset.current_price} ETH</h5></span>
+            {temp != null ? (
+              temp.map(asset => (
+                <div className="col-xl-3">
+                  <div key={asset.id} className="p-3 my-3 bg-dark shadow-lg card text-white rounded border border-secondary">
+                    <img className="w-100 image-block card-img" src={asset.image_url} alt="item" style={{ width: '100%', height: '35vh' }} />
+                    <div className="card-body">
+                      <span className="card-title w-50 h-50">{asset.name} #0000</span>
+                      <span className="card-text"><h5>{asset.current_price} ETH</h5></span>
+                    </div>
+                    {
+                      asset.availability == true ? (
+                        <button className="btn btn-secondary rounded btn-block fw-bold" onClick={() => addToCart(asset)}>Add to Cart</button>
+                      ) : (
+                        <button className="btn btn-secondary rounded btn-block fw-bold" disabled>Not available</button>
+                      )
+                    }
                   </div>
-                  {
-                    asset.availability == true ? (
-                      <button className="btn btn-secondary rounded btn-block fw-bold" onClick={() => addToCart(asset)}>Add to Cart</button>
-                    ) : (
-                      <button className="btn btn-secondary rounded btn-block fw-bold" disabled>Not available</button>
-                    )
-                  }
                 </div>
-              </div>
-            ))}
+              ))) : (
+                <div class="container mx-2 text-lg"><i>No Assets.</i></div>
+              )
+            }
           </div>
         </div>
       </div>

@@ -1,3 +1,8 @@
+/* Team 47: BlockMania 
+    Stefan Ralph Kumarasinghe (103804645)
+    Joe Cin NG (102765534)
+    Miran Abeyewardene (103824193) */
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/

@@ -1,3 +1,8 @@
+/* Team 47: BlockMania 
+    Stefan Ralph Kumarasinghe (103804645)
+    Joe Cin NG (102765534)
+    Miran Abeyewardene (103824193) */
+
 let { Web3 } = require("web3");
 
 let provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545");
