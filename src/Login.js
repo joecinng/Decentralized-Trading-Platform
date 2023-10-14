@@ -3,11 +3,13 @@
    Joe Cin NG (102765534)
    Miran Abeyewardene (103824193) */
    
+/* eslint-disable no-lone-blocks */
 import React, { useState } from 'react';
 import './css/App.css';
 import Logo from './img/Logo-black.png';
 import { showNotification } from './Notifications';
 
+{/* This is the login page where the system authenticate the user to login using login API.*/}
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

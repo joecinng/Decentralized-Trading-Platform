@@ -9,6 +9,7 @@ import './css/App.css';
 import Logo from './img/Logo-black.png'
 import { showNotification } from './Notifications';
 
+{/* This is register page where the system creates the new account using register API.*/}
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -34,10 +34,8 @@ function Nav({ cart, count }) {
         async function fetchData() {
           try {
             let url = "http://127.0.0.1:8000/myuser/"+localStorage.getItem('userID')
-            console.log(url);
             let response = await fetch(url);
             let data = await response.json();
-            console.log(data);
             setTemp(data.balance)
             setName(data.email)
             setAdd(data.address)

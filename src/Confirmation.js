@@ -8,9 +8,8 @@ import React from 'react';
 import './css/App.css';
 import Success from './img/success.png'
 
+{/* This is the confirmation page. Totals and shows a summary of the items in the cart and bought*/}
 function Confirmation() {
-
-    {/* This is the confirmation page. Totals and shows a summary of the items in the cart and bought*/}
     return (
         <div className="App w-100 d-flex justify-content-center align-items-center vh-100">
             <div className="container-fluid col-sm-12 mx-auto">

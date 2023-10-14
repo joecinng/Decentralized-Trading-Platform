@@ -1,14 +1,17 @@
+/* eslint-disable eqeqeq */
 /* Team 47: BlockMania 
     Stefan Ralph Kumarasinghe (103804645)
     Joe Cin NG (102765534)
     Miran Abeyewardene (103824193) */
 
+/* eslint-disable no-lone-blocks */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/App.css';
 import { useCart } from './CartContext';
 import Nav from './Nav';
 
+{/* This is activity page which we will retrieve all the transaction histories using the read transactions api*/}
 function Activity() {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [cryptoType] = useState('eth'); // Default value set to 'ethereum'
@@ -68,11 +71,11 @@ function Activity() {
                       <td className="py-4 border-0">{new Date(tx.received).toLocaleString()}</td>
                       <td className={`py-4 border-0`}>
                         <span className={`py-2 px-3 fw-bold ${
-                            tx.status === 'Confirmed' 
-                            ? 'rounded-3 btn-success bg-success' 
-                            : tx.status === 'Denied'
-                            ? 'rounded-3 btn-danger bg-danger'
-                            : 'rounded-3 btn-warning bg-warning'
+                          tx.status === 'Confirmed' 
+                          ? 'rounded-3 btn-success bg-success' 
+                          : tx.status === 'Denied'
+                          ? 'rounded-3 btn-danger bg-danger'
+                          : 'rounded-3 btn-warning bg-warning'
                           }`}>
                           {tx.status === 'Denied' ? 'Insufficient Funds' : tx.status}
                         </span>

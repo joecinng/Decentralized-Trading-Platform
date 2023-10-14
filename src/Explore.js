@@ -3,13 +3,15 @@
     Joe Cin NG (102765534)
     Miran Abeyewardene (103824193) */
 
+/* eslint-disable no-lone-blocks */
 import React, { useState, useEffect } from 'react';
 import Nav from './Nav';
 import { useCart } from './CartContext';
 import './css/App.css';
 
+{/* This is explore page where the user can browse the assets and apply filters.*/}
+{/* It uses the read items API to retrieve the items based on the type.*/}
 function Explore() {
-
   const [temp, setTemp] = useState([]);
   const [filteredAssets, setFilteredAssets] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -67,37 +69,36 @@ function Explore() {
                     className={`btn ${activeCategory === 'All' ? 'btn-secondary' : ''}`} 
                     onClick={() => Category('All')}
                   >
-                    <a href="#" className="text-white"><h6 className="my-1 mx-2">All</h6></a>
+                    <h6 className="my-1 mx-2 text-white">All</h6>
                   </button>
                   <button 
                     type="button" 
                     className={`btn ${activeCategory === 'Music' ? 'btn-secondary' : ''}`} 
                     onClick={() => Category('Music')}
                   >
-                    <a href="#" className="text-white"><h6 className="my-1 mx-2">Music</h6></a>
+                    <h6 className="my-1 mx-2 text-white">Music</h6>
                   </button>
                   <button 
                     type="button" 
                     className={`btn ${activeCategory === 'NFT' ? 'btn-secondary' : ''}`} 
                     onClick={() => Category('NFT')}
                   >
-                    <a href="#" className="text-white"><h6 className="my-1 mx-2">NFT</h6></a>
+                    <h6 className="my-1 mx-2 text-white">NFT</h6>
                   </button>
                   <button 
                     type="button" 
                     className={`btn ${activeCategory === 'Fantom' ? 'btn-secondary' : ''}`} 
                     onClick={() => Category('Fantom')}
                   >
-                    <a href="#" className="text-white"><h6 className="my-1 mx-2">Fantom</h6></a>
+                    <h6 className="my-1 mx-2 text-white">Fantom</h6>
                   </button>
                   <button 
                     type="button" 
                     className={`btn ${activeCategory === 'Art' ? 'btn-secondary' : ''}`} 
                     onClick={() => Category('Art')}
                   >
-                    <a href="#" className="text-white"><h6 className="my-1 mx-2">Art</h6></a>
+                    <h6 className="my-1 mx-2 text-white">Art</h6>
                   </button>
-                  {/* ... repeat for other categories ... */}
                 </div>
               </div>
             </div>
@@ -122,6 +123,7 @@ function Explore() {
                       <span className="card-text"><h5>{asset.current_price} ETH</h5></span>
                     </div>
                     {
+                      // eslint-disable-next-line eqeqeq
                       asset.availability == true ? (
                         <button className="btn btn-secondary rounded btn-block fw-bold" onClick={() => addToCart(asset)}>Add to Cart</button>
                       ) : (
