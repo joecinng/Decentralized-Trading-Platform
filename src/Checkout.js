@@ -28,12 +28,10 @@ function Checkout() {
                     setAccounts(accountArray);
                     setIsConnected(accountArray && accountArray.length > 0);
                 } catch (error) {
-                    showNotification("Error connecting to Metamask", error, "danger");
                     setIsConnected(false);
                 }
             } else {
                 console.log('MetaMask not detected');
-                showNotification("Error", "Metamask not detected", "danger");
                 setIsConnected(false);
             }
         };
@@ -74,24 +72,23 @@ function Checkout() {
                 await contract.methods.addTransaction(accounts[0], assetsId, price)
                     .send(transactionObject)
                     .on('transactionHash', function (hash) {
-                        //console.log('Transaction Hash: ' + hash);
+                        console.log('Transaction Hash: ' + hash);
                     })
                     .on('receipt', (receipt) => {
                         if (receipt.status) {
-                            //console.log('Transaction successful' + receipt.status);
-                            //console.log('Transaction was successful:', receipt);
+                            console.log('Transaction successful' + receipt.status);
+                            console.log('Transaction was successful:', receipt);
                             transactionStatus = true;
                         } else {
-                            showNotification("Error", "Transaction failed", "danger");
+                            console.log('Transaction failed');
                         }
                     })
                     .on('error', function (error) {
-                        showNotification("Error", error, "danger");
+                        console.error('Transaction Error: ' + error);
                     });
 
             } catch (error) {
                 console.error('Error executing the transaction:', error);
-                showNotification("Error", error, "danger");
             }
         
             if (transactionStatus) {
@@ -122,9 +119,11 @@ function Checkout() {
                     console.error('Checkout failed:', jsonResponse);
                     }
                 } catch (error) {
-                    showNotification("Checkout error", error, "danger");
+                    console.error('An error occurred:', error);
                 }
             }
+        } else {
+            showNotification("Error", "Wallet is not connected, please connect your wallet", "danger");
         }
     };
           
