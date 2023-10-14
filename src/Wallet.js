@@ -76,7 +76,7 @@ function Checkout() {
       }
   };
     fetchAccountDetails();
-}, []);
+}, [web3.utils]);
 
   const connectWallet = async () => {
     if (window.ethereum) {
